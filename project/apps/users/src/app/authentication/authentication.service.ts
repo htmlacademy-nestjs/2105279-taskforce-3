@@ -21,7 +21,6 @@ export class AuthenticationService {
       avatar: '', dateBirth: dayjs(dateBirth).toDate(),
       passwordHash: ''
     };
-
     const existUser = await this.taskUserRepository
       .findByEmail(email);
 
@@ -34,6 +33,7 @@ export class AuthenticationService {
 
     return this.taskUserRepository
       .create(userEntity);
+
   }
 
   public async verifyUser(dto: LoginUserDto) {
