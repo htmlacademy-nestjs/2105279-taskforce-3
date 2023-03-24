@@ -23,17 +23,17 @@ export class TaskUserEntity implements User {
     return { ...this };
   }
 
-  public fillEntity(blogUser: User) {
+  public fillEntity(taskUser: User) {
 
-    this._id = blogUser._id;
-    this.firstname = blogUser.firstname;
-    this.lastname = blogUser.lastname;
-    this.email = blogUser.email;
-    this.town = blogUser.town;
-    this.passwordHash = blogUser.passwordHash;
-    this.role = blogUser.role;
-    this.avatar = blogUser.avatar;
-    this.dateBirth = blogUser.dateBirth;
+    this._id = taskUser._id;
+    this.firstname = taskUser.firstname;
+    this.lastname = taskUser.lastname;
+    this.email = taskUser.email;
+    this.town = taskUser.town;
+    this.passwordHash = taskUser.passwordHash;
+    this.role = taskUser.role;
+    this.avatar = taskUser.avatar;
+    this.dateBirth = taskUser.dateBirth;
   }
 
   public async setPassword(password: string): Promise<TaskUserEntity> {
