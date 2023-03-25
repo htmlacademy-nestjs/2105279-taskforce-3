@@ -2,6 +2,7 @@ import { CRUDRepository } from '@project/util/util-types';
 import { TaskUserEntity } from './task-user.entity';
 import { User } from '@project/shared/app-types';
 import { Injectable } from '@nestjs/common';
+import crypto from 'crypto';
 
 @Injectable()
 export class TaskUserMemoryRepository implements CRUDRepository<TaskUserEntity, string, User> {
