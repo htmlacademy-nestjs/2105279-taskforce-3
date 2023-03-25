@@ -14,10 +14,10 @@ export class AuthenticationService {
   ) { }
 
   public async register(dto: CreateUserDto) {
-    const { firstname, lastname, email, town, password, dateBirth } = dto;
+    const { firstname, lastname, email, city, password, dateBirth } = dto;
 
     const taskUser = {
-      firstname, lastname, email, town, password, role: UserRole.Executor,
+      firstname, lastname, email, city, password, role: UserRole.Executor,
       avatar: '', dateBirth: dayjs(dateBirth).toDate(),
       passwordHash: ''
     };

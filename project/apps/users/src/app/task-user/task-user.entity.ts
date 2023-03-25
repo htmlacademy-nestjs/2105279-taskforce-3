@@ -9,7 +9,7 @@ export class TaskUserEntity implements User {
   public firstname: string;
   public lastname: string;
   public email: string;
-  public town: string;
+  public city: string;
   public passwordHash: string;
   public role: UserRole;
   public avatar: string;
@@ -29,7 +29,7 @@ export class TaskUserEntity implements User {
     this.firstname = taskUser.firstname;
     this.lastname = taskUser.lastname;
     this.email = taskUser.email;
-    this.town = taskUser.town;
+    this.city = taskUser.city;
     this.passwordHash = taskUser.passwordHash;
     this.role = taskUser.role;
     this.avatar = taskUser.avatar;
