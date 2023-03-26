@@ -1,7 +1,6 @@
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { TaskUserMemoryRepository } from '../task-user/task-user-memory.repository';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UserRole } from '@project/shared/app-types';
 import dayjs from 'dayjs';
 import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from './authentication.constant';
 import { TaskUserEntity } from '../task-user/task-user.entity';
@@ -14,10 +13,10 @@ export class AuthenticationService {
   ) { }
 
   public async register(dto: CreateUserDto) {
-    const { firstname, lastname, email, city, password, dateBirth } = dto;
+    const { firstname, lastname, email, city, password, role, dateBirth } = dto;
 
     const taskUser = {
-      firstname, lastname, email, city, password, role: UserRole.Executor,
+      firstname, lastname, email, city, password, role,
       avatar: '', dateBirth: dayjs(dateBirth).toDate(),
       passwordHash: ''
     };

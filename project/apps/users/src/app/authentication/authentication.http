@@ -8,7 +8,8 @@ Content-Type: application/json
   "firstname": "Keks",
   "lastname": "Smith",
   "password": "123456",
-  "city": "StPt"
+  "city": "StPt",
+  "role": "customer"
 }
 
 ###

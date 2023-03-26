@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { UserRole } from '@project/shared/app-types';
 
 export class CreateUserDto {
 
@@ -31,6 +32,12 @@ export class CreateUserDto {
     example: '123456'
   })
   public password: string;
+
+  @ApiProperty({
+    description: 'User role',
+    example: 'customer'
+  })
+  public role: UserRole;
 
   @ApiProperty({
     description: 'User birth date',
