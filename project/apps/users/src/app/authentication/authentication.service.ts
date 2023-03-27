@@ -65,8 +65,8 @@ export class AuthenticationService {
   /** Смена пароля*/
   public async changePassword(dto: ChangePasswordDto) {
     const { email, password, newPassword } = dto;
-    const userEntity = await this.verifyUser({ email, password });
-    await userEntity.setPassword(newPassword);
+    const taskUser = await this.verifyUser({ email, password });
+    const userEntity = await new TaskUserEntity(taskUser).setPassword(newPassword);
     return this.taskUserRepository.update(userEntity._id, userEntity);
   }
 

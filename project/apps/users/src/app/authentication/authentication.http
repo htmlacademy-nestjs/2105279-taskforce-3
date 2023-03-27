@@ -15,7 +15,7 @@ Content-Type: application/json
 ###
 
 # Get user by ID
-GET http://localhost:3333/api/auth/e1769d10-b6d7-49d9-81b4-e9c1ada05f5e HTTP/1.1
+GET http://localhost:3333/api/auth/3c4aea42-7474-4390-a2a1-96055651eb61 HTTP/1.1
 
 ###
 
@@ -26,6 +26,17 @@ Content-Type: application/json
 {
   "email": "user@notfound.local",
   "password": "123456"
+}
+
+###
+# Changed user password
+PATCH  http://localhost:3333/api/auth/change HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@notfound.local",
+  "password": "123456",
+  "newPassword": "654321"
 }
 
 ###

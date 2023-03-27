@@ -47,7 +47,7 @@ export class AuthenticationController {
   @ApiResponse({
     type: LoggedUserRdo,
     status: HttpStatus.OK,
-    description: 'User has been successfully logged.'
+    description: 'New password changed.'
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
