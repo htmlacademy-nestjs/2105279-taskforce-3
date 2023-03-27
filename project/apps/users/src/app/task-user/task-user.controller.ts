@@ -40,7 +40,7 @@ export class TaskUserController {
 
   /** Информация о исполнителе*/
   @ApiResponse({
-    type: CustomerUserRdo,
+    type: ExecuterUserRdo,
     status: HttpStatus.OK,
     description: 'User found'
   })

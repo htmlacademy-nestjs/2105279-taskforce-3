@@ -36,6 +36,7 @@ export class ExecuterUserRdo {
     description: 'City of residence',
     example: 'Санкт-Петербург'
   })
+  @Expose()
   public city: string;
 
   @ApiProperty({
