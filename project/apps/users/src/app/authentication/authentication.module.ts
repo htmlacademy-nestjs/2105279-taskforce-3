@@ -6,6 +6,6 @@ import { TaskUserModule } from '../task-user/task-user.module';
 @Module({
   imports: [TaskUserModule],
   controllers: [AuthenticationController],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService]
 })
 export class AuthenticationModule { }

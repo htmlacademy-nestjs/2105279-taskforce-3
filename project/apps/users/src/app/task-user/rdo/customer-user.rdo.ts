@@ -1,6 +1,5 @@
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserRole } from '@project/shared/app-types';
 
 export class CustomerUserRdo {
 
@@ -50,7 +49,7 @@ export class CustomerUserRdo {
     example: 'customer'
   })
   @Expose()
-  public role: UserRole;
+  public role: string;
 
   @ApiProperty({
     description: 'About user',

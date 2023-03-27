@@ -6,35 +6,35 @@ export class UpdateUserDto {
     description: 'User first name',
     example: 'Keks',
   })
-  public firstname: string;
+  public firstname?: string;
 
   @ApiProperty({
     description: 'User last name',
     example: 'Ivanov'
   })
-  public lastname: string;
+  public lastname?: string;
 
   @ApiProperty({
     description: 'User birth date',
     example: '1981-03-12',
   })
-  public dateBirth: Date;
+  public dateBirth?: Date;
 
   @ApiProperty({
     description: 'About user',
     example: 'Студент'
   })
-  public info: string;
+  public info?: string;
 
   @ApiProperty({
     description: 'Specialization',
     example: 'Курьер'
   })
-  public specialization: string;
+  public specialization?: string;
 
   @ApiProperty({
     description: 'City of residence',
     example: 'Санкт-Петербург'
   })
-  public city: string;
+  public city?: string;
 }
