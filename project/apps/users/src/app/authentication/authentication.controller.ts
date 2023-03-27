@@ -6,6 +6,7 @@ import { UserRdo } from './rdo/user.rdo';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
 import { LoginUserDto } from './dto/login-user.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ChangePasswordDto } from './dto/change-password.dto.js';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -14,6 +15,7 @@ export class AuthenticationController {
     private readonly authService: AuthenticationService
   ) { }
 
+  /** Регистрация пользователя*/
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'The new user has been successfully created.'
@@ -24,6 +26,7 @@ export class AuthenticationController {
     return fillObject(UserRdo, newUser);
   }
 
+  /** Вход пользователя*/
   @ApiResponse({
     type: LoggedUserRdo,
     status: HttpStatus.OK,
@@ -40,6 +43,24 @@ export class AuthenticationController {
     return fillObject(LoggedUserRdo, verifiedUser);
   }
 
+  /** Смена пароля*/
+  @ApiResponse({
+    type: LoggedUserRdo,
+    status: HttpStatus.OK,
+    description: 'User has been successfully logged.'
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Password or Login is wrong.',
+  })
+  @Post('change')
+  @HttpCode(HttpStatus.OK)
+  public async changePassword(@Body() dto: ChangePasswordDto) {
+    const userEntity = await this.authService.changePassword(dto);
+    return fillObject(LoggedUserRdo, userEntity);
+  }
+
+  /** Информация о пользователе*/
   @ApiResponse({
     type: UserRdo,
     status: HttpStatus.OK,

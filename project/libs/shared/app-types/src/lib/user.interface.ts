@@ -19,4 +19,5 @@ export interface User {
   info: string;
   specialization: string;
   ranking: number;
+  dateRegistration: Date;
 }

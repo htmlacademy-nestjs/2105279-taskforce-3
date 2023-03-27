@@ -15,6 +15,16 @@ export class TaskUserEntity implements User {
   public avatar: string;
   public dateBirth: Date;
 
+  public taskCount: number;
+  public newCount: number;
+  public rating: number;
+  public doneCount: number;
+  public failedCount: number;
+  public info: string;
+  public specialization: string;
+  public ranking: number;
+  public dateRegistration: Date;
+
   constructor(taskUser: User) {
     this.fillEntity(taskUser);
   }
@@ -34,6 +44,16 @@ export class TaskUserEntity implements User {
     this.role = taskUser.role;
     this.avatar = taskUser.avatar;
     this.dateBirth = taskUser.dateBirth;
+
+    this.taskCount = taskUser.taskCount;
+    this.newCount = taskUser.newCount;
+    this.rating = taskUser.rating;
+    this.doneCount = taskUser.doneCount;
+    this.failedCount = taskUser.failedCount;
+    this.info = taskUser.info;
+    this.specialization = taskUser.specialization;
+    this.ranking = taskUser.ranking;
+    this.dateRegistration = taskUser.dateRegistration;
   }
 
   public async setPassword(password: string): Promise<TaskUserEntity> {
