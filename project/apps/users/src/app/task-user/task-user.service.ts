@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { AUTH_USER_NOT_FOUND } from '../authentication/authentication.constant';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { TaskUserMemoryRepository } from './task-user-memory.repository';
 import { TaskUserEntity } from './task-user.entity';
+import { TaskUserRepository } from './task-user.repository';
 
 @Injectable()
 export class TaskUserService {
   constructor(
-    private readonly taskUserRepository: TaskUserMemoryRepository
+    private readonly taskUserRepository: TaskUserRepository
   ) { }
 
   /** Изменение данных о пользователе*/
