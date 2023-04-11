@@ -9,3 +9,63 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Category {
+  categoryId Int    @id @default(autoincrement()) @map("category_id")
+  name       String @default("")
+  Task       Task[]
+
+  @@map("categories")
+}
+
+model City {
+  cityId Int    @id @default(autoincrement()) @map("city_id")
+  name   String @default("")
+  Task   Task[]
+
+  @@map("cites")
+}
+
+model Tag {
+  tagId   Int       @id @default(autoincrement()) @map("tag_id")
+  name    String
+  TaskTag TaskTag[]
+
+  @@map("tags")
+}
+
+model Task {
+  taskId     Int      @id @default(autoincrement()) @map("task_id")
+  title      String   @default("")
+  details    String   @default("")
+  categoryId Int      @map("category_id")
+  price      Int
+  deadline   DateTime @default(now())
+  image      String   @default("")
+  address    String   @default("")
+  cityId     Int      @map("city_id")
+
+  customerId String?
+  executerId String?
+  status     String  @default("new")
+
+  createdAt DateTime @default(now())
+  publishAt DateTime @updatedAt
+
+  category Category  @relation(fields: [categoryId], references: [categoryId])
+  city     City      @relation(fields: [cityId], references: [cityId])
+  TaskTag  TaskTag[]
+
+  @@map("tasks")
+}
+
+model TaskTag {
+  taskId Int @map("task_id")
+  tagId  Int @map("tag_id")
+
+  task Task @relation(fields: [taskId], references: [taskId])
+  tag  Tag  @relation(fields: [tagId], references: [tagId])
+
+  @@id([taskId, tagId])
+  @@map("tasks_tags")
+}
