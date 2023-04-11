@@ -13,7 +13,8 @@ datasource db {
 model Category {
   categoryId Int    @id @default(autoincrement()) @map("category_id")
   name       String @default("")
-  Task       Task[]
+
+  task Task[]
 
   @@map("categories")
 }
@@ -21,17 +22,28 @@ model Category {
 model City {
   cityId Int    @id @default(autoincrement()) @map("city_id")
   name   String @default("")
-  Task   Task[]
+
+  task Task[]
 
   @@map("cites")
 }
 
 model Tag {
-  tagId   Int       @id @default(autoincrement()) @map("tag_id")
-  name    String
-  TaskTag TaskTag[]
+  tagId Int    @id @default(autoincrement()) @map("tag_id")
+  name  String
+
+  task Task[]
 
   @@map("tags")
+}
+
+model Status {
+  statusId Int    @id @default(autoincrement()) @map("status_id")
+  name     String
+
+  task Task[]
+
+  @@map("statuses")
 }
 
 model Task {
@@ -47,25 +59,43 @@ model Task {
 
   customerId String?
   executerId String?
-  status     String  @default("new")
+  statusId   Int     @map("status_id")
 
   createdAt DateTime @default(now())
   publishAt DateTime @updatedAt
 
-  category Category  @relation(fields: [categoryId], references: [categoryId])
-  city     City      @relation(fields: [cityId], references: [cityId])
-  TaskTag  TaskTag[]
+  category Category @relation(fields: [categoryId], references: [categoryId], onDelete: Cascade, onUpdate: Cascade)
+  city     City     @relation(fields: [cityId], references: [cityId])
+  status   Status   @relation(fields: [statusId], references: [statusId])
+
+  tags     Tag[]
+  comments Comment[]
+  Review   Review?
 
   @@map("tasks")
 }
 
-model TaskTag {
-  taskId Int @map("task_id")
-  tagId  Int @map("tag_id")
+model Comment {
+  commentId Int      @id @default(autoincrement()) @map("comment_id")
+  message   String
+  userId    String   @map("user_id")
+  taskId    Int      @map("task_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  task Task @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("comments")
+}
+
+model Review {
+  taskId     Int    @unique @map("task_id")
+  customerId String
+  executerId String
+  review     String @default("")
+  evaluation Int
 
   task Task @relation(fields: [taskId], references: [taskId])
-  tag  Tag  @relation(fields: [tagId], references: [tagId])
 
-  @@id([taskId, tagId])
-  @@map("tasks_tags")
+  @@map("reviews")
 }
