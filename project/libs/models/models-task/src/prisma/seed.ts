@@ -3,54 +3,65 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function fillDb() {
+
   await prisma.category.upsert({
     where: { categoryId: 1 },
     update: {},
     create: {
-      title: 'Книги',
-      posts: {
-        create: [
-          {
-            title: 'Худеющий',
-            userId: '13',
-            content: 'Недавно прочитал страшный роман «Худеющий».',
-            description: 'На мой взгляд, это один из самых страшных романов Стивена Кинга.'
-          },
-        ]
-      },
+      name: 'Доставка',
     }
   });
-  await prisma.category.upsert({
-    where: { categoryId: 2 },
+
+  await prisma.city.upsert({
+    where: { cityId: 1 },
     update: {},
     create: {
-      title: 'Компьютеры',
-      posts: {
-        create: [
-          {
-            title: 'Мой ноутбук',
-            userId: '13',
-            content: 'Это полный текст',
-            description: 'Несколько лет назад купил себе MacBook Pro…',
-            comments: {
-              create: [
-                {
-                  message: 'Вау! Отличный ноутбук.',
-                  userId: '14',
-                }
-              ]
-            }
-          },
-          {
-            title: 'Первый PC',
-            userId: '13',
-            content: 'Первый PC появился в 2000-м году…',
-            description: 'Это был Pentium II, 400 Mhz, 32Mb RAM…'
-          }
-        ]
-      }
+      name: 'Санкт-Петербург',
     }
   });
+
+  await prisma.status.upsert({
+    where: { statusId: 1 },
+    update: {},
+    create: {
+      name: 'new',
+    }
+  });
+
+  await prisma.tag.upsert({
+    where: { tagId: 1 },
+    update: {},
+    create: {
+      name: 'доставка',
+    }
+  });
+
+  await prisma.task.upsert({
+    where: { taskId: 1 },
+    update: {},
+    create: {
+      title: 'Доставка',
+      details: 'Из пункта А в пункт Б',
+      categoryId: 1,
+      price: 300,
+      address: 'Пункты А и Б',
+      cityId: 1,
+      customerId: '22',
+      executerId: '115',
+      statusId: 1
+    }
+  });
+
+  await prisma.comment.upsert({
+    where: { commentId: 1 },
+    update: {},
+    create: {
+      message: 'Несколько лет назад...',
+      userId: '22',
+      taskId: 1
+    }
+  });
+
   console.info('🤘️ Database was filled')
 }
 
