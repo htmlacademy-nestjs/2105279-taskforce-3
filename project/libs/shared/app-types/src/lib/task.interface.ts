@@ -1,7 +1,7 @@
 import { TaskStatus } from './task-status.enum.js';
 
 export interface Task {
-  _id?: string;
+  id?: string;
   title: string;
   details: string;
   category: string;
@@ -13,7 +13,8 @@ export interface Task {
   city: string;
 
   authorId: string;
-  createData: Date;
+  createdAt: Date;
+  updatedAt: Date;
   status: TaskStatus;
   executerId: string;
 }

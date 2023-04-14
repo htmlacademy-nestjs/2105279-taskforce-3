@@ -1,6 +1,7 @@
 export interface Review {
-  _id?: string;
-  taskId: string;
-  text: string;
-  rating: string;
+  id?: string;
+  review: string;
+  evaluation: string;
+  customerId: string;
+  executerId: string;
 }
