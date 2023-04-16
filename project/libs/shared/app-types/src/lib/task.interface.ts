@@ -1,20 +1,26 @@
-import { TaskStatus } from './task-status.enum.js';
+import { Tag } from './tag.interface.js';
+import { City } from './city.interface.js';
+import { Comment } from './comment.interface.js';
+import { Review } from './review.interface.js';
+import { Category } from './category.interface.js';
 
 export interface Task {
-  id?: string;
+  id?: number;
   title: string;
   details: string;
-  category: string;
+  category: Category;
   price: number;
   deadline: Date;
   image: string;
   address: string;
-  tagIds: string[];
-  city: string;
+  tags: Tag[];
+  city: City;
+  comments: Comment[];
+  review: Review;
 
   authorId: string;
   createdAt: Date;
   updatedAt: Date;
-  status: TaskStatus;
+  status: string;
   executerId: string;
 }

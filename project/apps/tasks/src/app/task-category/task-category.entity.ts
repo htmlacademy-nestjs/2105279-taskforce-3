@@ -15,6 +15,6 @@ export class TaskCategoryEntity implements Entity<TaskCategoryEntity>, Category 
   }
 
   public toObject(): TaskCategoryEntity {
-    return { ...this }
+    return { ...this };
   }
 }
