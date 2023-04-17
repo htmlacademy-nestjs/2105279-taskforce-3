@@ -20,14 +20,14 @@ model Category {
   @@map("categories")
 }
 
-model City {
-  cityId Int    @id @default(autoincrement()) @map("city_id")
-  name   String @default("")
+// model City {
+//   cityId Int    @id @default(autoincrement()) @map("city_id")
+//   name   String @default("")
 
-  task Task[]
+//   task Task[]
 
-  @@map("cites")
-}
+//   @@map("cites")
+// }
 
 model Tag {
   tagId Int    @id @default(autoincrement()) @map("tag_id")
@@ -38,14 +38,14 @@ model Tag {
   @@map("tags")
 }
 
-model Status {
-  statusId Int    @id @default(autoincrement()) @map("status_id")
-  name     String
+// model Status {
+//   statusId Int    @id @default(autoincrement()) @map("status_id")
+//   name     String
 
-  task Task[]
+//   task Task[]
 
-  @@map("statuses")
-}
+//   @@map("statuses")
+// }
 
 model Task {
   taskId     Int      @id @default(autoincrement()) @map("task_id")
@@ -56,18 +56,19 @@ model Task {
   deadline   DateTime @default(now())
   image      String   @default("")
   address    String   @default("")
-  cityId     Int      @map("city_id")
+  city       String   @default("")
+  status     String   @default("new")
 
   customerId String?
   executerId String?
-  statusId   Int     @map("status_id")
+  // statusId   Int     @map("status_id")
 
   createdAt DateTime @default(now())
   publishAt DateTime @updatedAt
 
   category Category @relation(fields: [categoryId], references: [categoryId], onDelete: Cascade, onUpdate: Cascade)
-  city     City     @relation(fields: [cityId], references: [cityId])
-  status   Status   @relation(fields: [statusId], references: [statusId])
+  // city     City     @relation(fields: [cityId], references: [cityId])
+  // status   Status   @relation(fields: [statusId], references: [statusId])
 
   tags     Tag[]
   comments Comment[]
@@ -90,13 +91,14 @@ model Comment {
 }
 
 model Review {
+  reviewId   Int    @id @default(autoincrement()) @map("review_id")
   taskId     Int    @unique @map("task_id")
   customerId String
   executerId String
   review     String @default("")
   evaluation Int
 
-  task Task @relation(fields: [taskId], references: [taskId])
+  task Task @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("reviews")
 }
