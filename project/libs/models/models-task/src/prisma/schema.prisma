@@ -73,6 +73,7 @@ model Task {
   tags     Tag[]
   comments Comment[]
   Review   Review?
+  Respond  Respond?
 
   @@map("tasks")
 }
@@ -101,4 +102,12 @@ model Review {
   task Task @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("reviews")
+}
+
+model Respond {
+  respondId Int    @id @default(autoincrement()) @map("respond_id")
+  taskId    Int    @unique @map("task_id")
+  userId    String @map("user_id")
+
+  task Task @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
 }

@@ -1,7 +1,7 @@
 export interface Review {
-  id?: string;
+  id?: number;
   review: string;
-  evaluation: string;
+  evaluation: number;
   customerId: string;
   executerId: string;
 }
