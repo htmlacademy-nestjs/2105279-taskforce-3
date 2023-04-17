@@ -1,9 +1,9 @@
-import { Tag } from './tag.interface.js';
-import { City } from './city.enum.js';
+// import { Tag } from './tag.interface.js';
+// import { City } from './city.enum.js';
 import { Comment } from './comment.interface.js';
 import { Review } from './review.interface.js';
 import { Category } from './category.interface.js';
-import { TaskStatus } from './task-status.enum.js';
+// import { TaskStatus } from './task-status.enum.js';
 
 export interface Task {
   id?: number;
@@ -14,14 +14,14 @@ export interface Task {
   deadline: Date;
   image: string;
   address: string;
-  tags: Tag[];
-  city: City;
+  tags: string;
+  city: string;
   comments: Comment[];
   review: Review;
 
   authorId: string;
   createdAt: Date;
   updatedAt: Date;
-  status: TaskStatus;
+  status: string;
   executerId: string;
 }

@@ -1,5 +1,5 @@
 import { Entity } from '@project/util/util-types';
-import { Category, Task, Comment, Review, City, Tag } from '@project/shared/app-types';
+import { Category, Task, Comment, Review } from '@project/shared/app-types';
 
 export class TaskEntity implements Entity<TaskEntity>, Task {
   public id: number;
@@ -10,10 +10,10 @@ export class TaskEntity implements Entity<TaskEntity>, Task {
   public deadline: Date;
   public image: string;
   public address: string;
-  public city: City;
+  public city: string;
   public comments: Comment[];
   public review: Review;
-  public tags: Tag[];
+  public tags: string;
   public status: string;
 
   public authorId: string;
@@ -39,7 +39,7 @@ export class TaskEntity implements Entity<TaskEntity>, Task {
     this.city = entity.city;
     this.comments = [];
     this.review = entity.review;
-    this.tags = [...entity.tags];
+    this.tags = entity.tags;
     this.status = entity.status;
     this.authorId = entity.authorId;
     this.createdAt = new Date();
@@ -52,7 +52,7 @@ export class TaskEntity implements Entity<TaskEntity>, Task {
     return {
       ...this,
       comments: this.comments.map(({ id }) => ({ id })),
-      tags: this.comments.map(({ id }) => ({ id })),
+      // tags: this.tags.map(({ id }) => ({ id })),
     };
   }
 }

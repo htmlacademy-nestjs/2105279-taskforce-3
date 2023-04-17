@@ -20,15 +20,6 @@ model Category {
   @@map("categories")
 }
 
-// model City {
-//   cityId Int    @id @default(autoincrement()) @map("city_id")
-//   name   String @default("")
-
-//   task Task[]
-
-//   @@map("cites")
-// }
-
 model Tag {
   tagId Int    @id @default(autoincrement()) @map("tag_id")
   name  String
@@ -37,15 +28,6 @@ model Tag {
 
   @@map("tags")
 }
-
-// model Status {
-//   statusId Int    @id @default(autoincrement()) @map("status_id")
-//   name     String
-
-//   task Task[]
-
-//   @@map("statuses")
-// }
 
 model Task {
   taskId     Int      @id @default(autoincrement()) @map("task_id")
@@ -61,14 +43,11 @@ model Task {
 
   customerId String?
   executerId String?
-  // statusId   Int     @map("status_id")
 
   createdAt DateTime @default(now())
   publishAt DateTime @updatedAt
 
   category Category @relation(fields: [categoryId], references: [categoryId], onDelete: Cascade, onUpdate: Cascade)
-  // city     City     @relation(fields: [cityId], references: [cityId])
-  // status   Status   @relation(fields: [statusId], references: [statusId])
 
   tags     Tag[]
   comments Comment[]
