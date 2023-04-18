@@ -12,22 +12,6 @@ async function fillDb() {
     }
   });
 
-  await prisma.city.upsert({
-    where: { cityId: 1 },
-    update: {},
-    create: {
-      name: 'Санкт-Петербург',
-    }
-  });
-
-  await prisma.status.upsert({
-    where: { statusId: 1 },
-    update: {},
-    create: {
-      name: 'new',
-    }
-  });
-
   await prisma.tag.upsert({
     where: { tagId: 1 },
     update: {},
@@ -45,10 +29,10 @@ async function fillDb() {
       categoryId: 1,
       price: 300,
       address: 'Пункты А и Б',
-      cityId: 1,
+      city: 'Санкт-Петербург',
       customerId: '22',
       executerId: '115',
-      statusId: 1
+      status: 'new'
     }
   });
 

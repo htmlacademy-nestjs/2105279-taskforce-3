@@ -50,8 +50,6 @@ CREATE TABLE "comments" (
 CREATE TABLE "reviews" (
     "review_id" SERIAL NOT NULL,
     "task_id" INTEGER NOT NULL,
-    "customerId" TEXT NOT NULL,
-    "executerId" TEXT NOT NULL,
     "review" TEXT NOT NULL DEFAULT '',
     "evaluation" INTEGER NOT NULL,
 
@@ -62,7 +60,7 @@ CREATE TABLE "reviews" (
 CREATE TABLE "Respond" (
     "respond_id" SERIAL NOT NULL,
     "task_id" INTEGER NOT NULL,
-    "user_id" TEXT NOT NULL,
+    "executer_id" TEXT NOT NULL,
 
     CONSTRAINT "Respond_pkey" PRIMARY KEY ("respond_id")
 );

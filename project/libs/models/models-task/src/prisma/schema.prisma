@@ -14,17 +14,15 @@ datasource db {
 model Category {
   categoryId Int    @id @default(autoincrement()) @map("category_id")
   name       String @default("")
-
-  task Task[]
+  task       Task[]
 
   @@map("categories")
 }
 
 model Tag {
   tagId Int    @id @default(autoincrement()) @map("tag_id")
-  name  String
-
-  task Task[]
+  name  String @unique
+  task  Task[]
 
   @@map("tags")
 }
@@ -33,6 +31,7 @@ model Task {
   taskId     Int      @id @default(autoincrement()) @map("task_id")
   title      String   @default("")
   details    String   @default("")
+  category   Category @relation(fields: [categoryId], references: [categoryId], onDelete: Cascade, onUpdate: Cascade)
   categoryId Int      @map("category_id")
   price      Int
   deadline   DateTime @default(now())
@@ -47,8 +46,6 @@ model Task {
   createdAt DateTime @default(now())
   publishAt DateTime @updatedAt
 
-  category Category @relation(fields: [categoryId], references: [categoryId], onDelete: Cascade, onUpdate: Cascade)
-
   tags     Tag[]
   comments Comment[]
   Review   Review?
@@ -61,32 +58,29 @@ model Comment {
   commentId Int      @id @default(autoincrement()) @map("comment_id")
   message   String
   userId    String   @map("user_id")
+  task      Task     @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
   taskId    Int      @map("task_id")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-
-  task Task @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("comments")
 }
 
 model Review {
   reviewId   Int    @id @default(autoincrement()) @map("review_id")
+  task       Task   @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
   taskId     Int    @unique @map("task_id")
-  customerId String
-  executerId String
   review     String @default("")
   evaluation Int
-
-  task Task @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("reviews")
 }
 
 model Respond {
-  respondId Int    @id @default(autoincrement()) @map("respond_id")
-  taskId    Int    @unique @map("task_id")
-  userId    String @map("user_id")
+  respondId  Int    @id @default(autoincrement()) @map("respond_id")
+  task       Task   @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
+  taskId     Int    @unique @map("task_id")
+  executerId String @map("executer_id")
 
-  task Task @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
+  @@map("responds")
 }
