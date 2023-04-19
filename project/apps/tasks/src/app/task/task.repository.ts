@@ -13,7 +13,9 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
     return this.prisma.task.create({
       data: {
         ...entityData,
-        city: entityData.city
+        comments: {
+          connect: []
+        },
       });
   }
 

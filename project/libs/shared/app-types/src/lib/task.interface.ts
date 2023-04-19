@@ -1,27 +1,25 @@
-// import { Tag } from './tag.interface.js';
-// import { City } from './city.enum.js';
 import { Comment } from './comment.interface.js';
 import { Review } from './review.interface.js';
 import { Category } from './category.interface.js';
-// import { TaskStatus } from './task-status.enum.js';
+import { Tag } from './tag.interface.js';
 
 export interface Task {
   id?: number;
   title: string;
   details: string;
-  category: Category;
+  // category: Category;
   price: number;
   deadline: Date;
   image: string;
   address: string;
-  tags: string;
+  // tags: Tag[];
   city: string;
-  comments: Comment[];
-  review: Review;
+  // comments: Comment[];
+  // review: Review;
 
-  authorId: string;
+  customerId: string;
   createdAt: Date;
-  updatedAt: Date;
+  // updatedAt: Date;
   status: string;
   executerId: string;
 }
