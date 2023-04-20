@@ -44,7 +44,7 @@ model Task {
   executerId String?
 
   createdAt DateTime @default(now())
-  publishAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
   tags     Tag[]
   comments Comment[]

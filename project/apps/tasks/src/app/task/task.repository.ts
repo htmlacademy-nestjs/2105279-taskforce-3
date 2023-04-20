@@ -1,5 +1,5 @@
 import { TaskEntity } from './task.entity';
-import { Category, Task } from '@project/shared/app-types';
+import { Task } from '@project/shared/app-types';
 import { Injectable } from '@nestjs/common';
 import { CRUDRepository } from '@project/util/util-types';
 import { PrismaService } from '../prisma/prisma.service';
@@ -13,10 +13,19 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
     return this.prisma.task.create({
       data: {
         ...entityData,
+        category: {
+          connect: {
+            categoryId: entityData.id
+          }
+        },
+        tags: {
+          connect: entityData.tags.map(({ id }) => ({ tagId: id }))
+        },
         comments: {
           connect: []
         },
-      });
+      }
+    }) as unknown as Task;
   }
 
   public async destroy(taskId: number): Promise<void> {
@@ -33,19 +42,21 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
         taskId
       },
       include: {
+        tags: true,
         comments: true,
-        category: true,
+        category: true
       }
-    });
+    }) as unknown as Task;
   }
 
-  public find(): Promise<Task[]> {
+  public async find(): Promise<Task[]> {
     return this.prisma.task.findMany({
       include: {
+        tags: true,
         comments: true,
-        categories: true
+        category: true
       }
-    });
+    }) as unknown as Task[];
   }
 
   public update(_id: number, _item: TaskEntity): Promise<Task> {

@@ -42,17 +42,11 @@ export class TaskEntity implements Entity<TaskEntity>, Task {
     this.tags = [];
     this.status = entity.status;
     this.customerId = entity.customerId;
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
     this.status = entity.status;
     this.executerId = entity.executerId;
   }
 
   public toObject(): TaskEntity {
-    return {
-      ...this,
-      comments: this.comments.map(({ id }) => ({ id })),
-      tags: this.tags.map(({ id }) => ({ id })),
-    };
+    return { ...this };
   }
 }

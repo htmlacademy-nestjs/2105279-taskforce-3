@@ -7,19 +7,19 @@ export interface Task {
   id?: number;
   title: string;
   details: string;
-  // category: Category;
+  category: Category;
   price: number;
   deadline: Date;
   image: string;
   address: string;
-  // tags: Tag[];
+  tags: Tag[];
   city: string;
-  // comments: Comment[];
-  // review: Review;
+  comments: Comment[];
+  review?: Review;
 
   customerId: string;
   createdAt: Date;
-  // updatedAt: Date;
+  updatedAt: Date;
   status: string;
   executerId: string;
 }
