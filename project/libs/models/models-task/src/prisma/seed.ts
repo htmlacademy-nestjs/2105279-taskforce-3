@@ -40,7 +40,7 @@ async function fillDb() {
         },
         ]
       },
-      review: {
+      Review: {
         create: {
           review: 'В последний момент',
           evaluation: 4

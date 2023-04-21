@@ -10,7 +10,7 @@ export interface Task {
   category: Category;
   price: number;
   deadline: Date;
-  image: string;
+  image?: string;
   address: string;
   tags: Tag[];
   city: string;
@@ -18,8 +18,8 @@ export interface Task {
   review?: Review;
 
   customerId: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
   status: string;
-  executerId: string;
+  executerId?: string;
 }

@@ -49,7 +49,8 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
       include: {
         tags: true,
         comments: true,
-        category: true
+        category: true,
+        Review: true
       }
     });
   }
@@ -59,7 +60,8 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
       include: {
         tags: true,
         comments: true,
-        category: true
+        category: true,
+        Review: true
       }
     });
   }

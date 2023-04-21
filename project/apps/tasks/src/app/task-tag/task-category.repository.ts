@@ -30,6 +30,14 @@ export class TaskTagRepository implements CRUDRepository<TaskTagEntity, number, 
     });
   }
 
+  public findByName(name: string): Promise<Tag | null> {
+    return this.prisma.tag.findFirst({
+      where: {
+        name
+      }
+    });
+  }
+
   public find(ids: number[] = []): Promise<Tag[]> {
     return this.prisma.tag.findMany({
       where: {

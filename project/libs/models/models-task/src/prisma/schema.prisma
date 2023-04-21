@@ -48,8 +48,8 @@ model Task {
 
   tags     Tag[]
   comments Comment[]
-  review   Review?
-  respond  Respond?
+  Review   Review?
+  Respond  Respond?
 
   @@map("tasks")
 }
