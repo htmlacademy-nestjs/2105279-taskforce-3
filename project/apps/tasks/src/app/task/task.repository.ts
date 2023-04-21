@@ -24,8 +24,13 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
         comments: {
           connect: []
         },
+      },
+      include: {
+        tags: true,
+        comments: true,
+        category: true
       }
-    }) as unknown as Task;
+    });
   }
 
   public async destroy(taskId: number): Promise<void> {
@@ -46,7 +51,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
         comments: true,
         category: true
       }
-    }) as unknown as Task;
+    });
   }
 
   public async find(): Promise<Task[]> {
@@ -56,7 +61,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
         comments: true,
         category: true
       }
-    }) as unknown as Task[];
+    });
   }
 
   public update(_id: number, _item: TaskEntity): Promise<Task> {
