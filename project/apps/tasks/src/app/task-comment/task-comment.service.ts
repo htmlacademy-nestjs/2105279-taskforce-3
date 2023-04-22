@@ -15,6 +15,7 @@ export class TaskCommentService {
     const categoryEntity = new TaskCommentEntity({
       ...dto,
       taskId,
+      userId: '123'
     });
     return this.taskCommentRepository.create(categoryEntity);
   }
@@ -35,7 +36,6 @@ export class TaskCommentService {
     const comment = await this.taskCommentRepository.findById(id);
     return this.taskCommentRepository.update(id, new TaskCommentEntity({
       ...dto,
-      id,
       taskId: comment.taskId,
     }
     ));

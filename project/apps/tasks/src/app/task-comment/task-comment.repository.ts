@@ -9,8 +9,18 @@ export class TaskCommentRepository implements CRUDRepository<TaskCommentEntity, 
   constructor(private readonly prisma: PrismaService) { }
 
   public async create(item: TaskCommentEntity): Promise<Comment> {
+    const entityData = item.toObject();
+    // const taskId = entityData.taskId;
+    // delete entityData.taskId;
     return this.prisma.comment.create({
-      data: { ...item.toObject() }
+      data: {
+        ...entityData,
+        // task: {
+        //   connect: {
+        //     taskId
+        //   }
+        // }
+      }
     });
   }
 

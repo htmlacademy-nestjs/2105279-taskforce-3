@@ -42,7 +42,7 @@ export class TaskCommentController {
   @Patch('/:id')
   async update(@Param('id') id: string, @Body() dto: UpdateCommentDto) {
     const commentId = parseInt(id, 10);
-    const updatedComment = await this.taskCommentService.updateComment(commentId, dto)
+    const updatedComment = await this.taskCommentService.updateComment(commentId, { ...dto, userId: '18' });
     return fillObject(CommentRdo, updatedComment);
   }
 }

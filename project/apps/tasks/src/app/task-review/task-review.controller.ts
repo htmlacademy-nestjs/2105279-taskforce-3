@@ -9,7 +9,6 @@ import { UpdateReviewDto } from './dto/update-review.dto';
 export class TaskReviewController {
   constructor(
     private readonly taskReviewService: TaskReviewService,
-    // private readonly taskReviewService: TaskReviewService
   ) { }
 
   @Get('/:id')
