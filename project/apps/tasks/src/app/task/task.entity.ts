@@ -1,11 +1,11 @@
 import { Entity } from '@project/util/util-types';
-import { Category, Task, Comment, Review, Tag } from '@project/shared/app-types';
+import { Task, Comment, Review, Tag } from '@project/shared/app-types';
 
 export class TaskEntity implements Entity<TaskEntity>, Task {
   public id: number;
   public title: string;
   public details: string;
-  public category: Category;
+  public categoryId: number;
   public price: number;
   public deadline: Date;
   public image: string;
@@ -31,7 +31,7 @@ export class TaskEntity implements Entity<TaskEntity>, Task {
     this.id = entity.id;
     this.title = entity.title;
     this.details = entity.details;
-    this.category = entity.category;
+    this.categoryId = entity.categoryId;
     this.price = entity.price;
     this.deadline = entity.deadline;
     this.image = entity.image;

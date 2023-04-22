@@ -1,7 +1,7 @@
 export class UpdateTaskDto {
   public title: string;
   public details: string;
-  public category: number;
+  public categoryId: number;
   public price: number;
   public deadline: Date;
   public address: string;

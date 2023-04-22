@@ -17,18 +17,19 @@ export class TaskService {
   ) { }
 
   async createTask(dto: CreateTaskDto): Promise<Task> {
-    const category = await this.taskCategoryRepository.findById(dto.category);
-    const tags = await Promise.all(dto.tags
-      .split(' ')
-      .map(async (name) => {
-        const tag = await this.taskTagRepository.findByName(name);
-        if (tag) {
-          return tag;
-        }
-        return await this.taskTagRepository.create(new TaskTagEntity({ name }));
-      }));
+    const tags = dto.tags
+      ? await Promise.all(dto.tags
+        .split(' ')
+        .map(async (name) => {
+          const tag = await this.taskTagRepository.findByName(name);
+          if (tag) {
+            return tag;
+          }
+          return await this.taskTagRepository.create(new TaskTagEntity({ name }));
+        }))
+      : [];
 
-    const taskEntity = new TaskEntity({ ...dto, category, status: TaskStatus.New, comments: [], tags, customerId: '22' });
+    const taskEntity = new TaskEntity({ ...dto, status: TaskStatus.New, comments: [], tags, customerId: '22' });
     return this.taskRepository.create(taskEntity);
   }
 

@@ -31,8 +31,7 @@ Content-Type: application/json
 
 {
   "review": "работа выполенена в последний момент",
-  "evaluation": 4,
-  "taskId" : "1"
+  "evaluation": 4
 }
 
 

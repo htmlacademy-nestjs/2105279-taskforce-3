@@ -13,11 +13,6 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
     return this.prisma.task.create({
       data: {
         ...entityData,
-        category: {
-          connect: {
-            categoryId: entityData.id
-          }
-        },
         tags: {
           connect: entityData.tags.map(({ id }) => ({ tagId: id }))
         },
