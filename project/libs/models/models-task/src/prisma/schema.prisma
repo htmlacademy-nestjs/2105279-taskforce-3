@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../../../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  categoryId Int    @id @default(autoincrement()) @map("category_id")
+  name       String @default("")
+  task       Task[]
+
+  @@map("categories")
+}
+
+model Tag {
+  tagId Int    @id @default(autoincrement()) @map("tag_id")
+  name  String @unique
+  task  Task[]
+
+  @@map("tags")
+}
+
+model Task {
+  taskId     Int      @id @default(autoincrement()) @map("task_id")
+  title      String   @default("")
+  details    String   @default("")
+  category   Category @relation(fields: [categoryId], references: [categoryId], onDelete: Cascade, onUpdate: Cascade)
+  categoryId Int      @map("category_id")
+  price      Int
+  deadline   DateTime @default(now())
+  image      String   @default("")
+  address    String   @default("")
+  city       String   @default("")
+  status     String   @default("new")
+
+  customerId String?
+  executerId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tags     Tag[]
+  comments Comment[]
+  Review   Review?
+  Respond  Respond?
+
+  @@map("tasks")
+}
+
+model Comment {
+  commentId Int      @id @default(autoincrement()) @map("comment_id")
+  message   String
+  userId    String   @map("user_id")
+  task      Task     @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
+  taskId    Int      @map("task_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("comments")
+}
+
+model Review {
+  reviewId   Int    @id @default(autoincrement()) @map("review_id")
+  task       Task   @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
+  taskId     Int    @unique @map("task_id")
+  review     String @default("")
+  evaluation Int
+
+  @@map("reviews")
+}
+
+model Respond {
+  respondId  Int    @id @default(autoincrement()) @map("respond_id")
+  task       Task   @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
+  taskId     Int    @unique @map("task_id")
+  executerId String @map("executer_id")
+
+  @@map("responds")
+}

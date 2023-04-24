@@ -1,5 +1,5 @@
 export interface Respond {
-  _id?: string;
-  taskId: string;
+  id?: number;
+  taskId: number;
   userId: string;
 }
