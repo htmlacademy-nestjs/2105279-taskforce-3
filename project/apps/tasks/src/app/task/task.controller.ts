@@ -12,9 +12,8 @@ export class TaskController {
   ) { }
 
   @Get('/:id')
-  async show(@Param('id') id: string) {
-    const taskId = parseInt(id, 10);
-    const task = await this.taskService.getTask(taskId);
+  async show(@Param('id') id: number) {
+    const task = await this.taskService.getTask(id);
     return fillObject(TaskRdo, task);
   }
 
@@ -32,15 +31,13 @@ export class TaskController {
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async destroy(@Param('id') id: string) {
-    const taskId = parseInt(id, 10);
-    this.taskService.deleteTask(taskId);
+  async destroy(@Param('id') id: number) {
+    this.taskService.deleteTask(id);
   }
 
   @Patch('/:id')
-  async update(@Param('id') id: string, @Body() dto: UpdateTaskDto) {
-    const taskId = parseInt(id, 10);
-    const updatedTask = await this.taskService.updateTask(taskId, dto);
+  async update(@Param('id') id: number, @Body() dto: UpdateTaskDto) {
+    const updatedTask = await this.taskService.updateTask(id, dto);
     return fillObject(TaskRdo, updatedTask)
   }
 }

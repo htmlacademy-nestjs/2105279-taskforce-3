@@ -12,9 +12,8 @@ export class TaskReviewController {
   ) { }
 
   @Get('/:id')
-  async show(@Param('id') id: string) {
-    const reviewId = parseInt(id, 10);
-    const existReview = await this.taskReviewService.getReview(reviewId);
+  async show(@Param('id') id: number) {
+    const existReview = await this.taskReviewService.getReview(id);
     return fillObject(ReviewRdo, existReview);
   }
 
@@ -32,15 +31,13 @@ export class TaskReviewController {
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async destroy(@Param('id') id: string) {
-    const reviewId = parseInt(id, 10);
-    this.taskReviewService.deleteReview(reviewId);
+  async destroy(@Param('id') id: number) {
+    this.taskReviewService.deleteReview(id);
   }
 
   @Patch('/:id')
-  async update(@Param('id') id: string, @Body() dto: UpdateReviewDto) {
-    const reviewId = parseInt(id, 10);
-    const updatedReview = await this.taskReviewService.updateReview(reviewId, dto)
+  async update(@Param('id') id: number, @Body() dto: UpdateReviewDto) {
+    const updatedReview = await this.taskReviewService.updateReview(id, dto)
     return fillObject(ReviewRdo, updatedReview);
   }
 }

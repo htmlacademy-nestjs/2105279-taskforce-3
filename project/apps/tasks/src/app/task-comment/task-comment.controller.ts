@@ -12,37 +12,32 @@ export class TaskCommentController {
   ) { }
 
   @Get('/:id')
-  async show(@Param('id') id: string) {
-    const commentId = parseInt(id, 10);
-    const existComment = await this.taskCommentService.getComment(commentId);
+  async show(@Param('id') id: number) {
+    const existComment = await this.taskCommentService.getComment(id);
     return fillObject(CommentRdo, existComment);
   }
 
   @Get('/task/:id')
-  async index(@Param('id') id: string) {
-    const taskId = parseInt(id, 10);
-    const comment = await this.taskCommentService.getComments(taskId);
+  async index(@Param('id') id: number) {
+    const comment = await this.taskCommentService.getComments(id);
     return fillObject(CommentRdo, comment);
   }
 
   @Post('/task/:id')
-  async create(@Param('id') id: string, @Body() dto: CreateCommentDto) {
-    const taskId = parseInt(id, 10);
-    const newComment = await this.taskCommentService.createComment(taskId, dto);
+  async create(@Param('id') id: number, @Body() dto: CreateCommentDto) {
+    const newComment = await this.taskCommentService.createComment(id, dto);
     return fillObject(CommentRdo, newComment);
   }
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async destroy(@Param('id') id: string) {
-    const commentId = parseInt(id, 10);
-    this.taskCommentService.deleteComment(commentId);
+  async destroy(@Param('id') id: number) {
+    this.taskCommentService.deleteComment(id);
   }
 
   @Patch('/:id')
-  async update(@Param('id') id: string, @Body() dto: UpdateCommentDto) {
-    const commentId = parseInt(id, 10);
-    const updatedComment = await this.taskCommentService.updateComment(commentId, { ...dto, userId: '18' });
+  async update(@Param('id') id: number, @Body() dto: UpdateCommentDto) {
+    const updatedComment = await this.taskCommentService.updateComment(id, { ...dto, userId: '18' });
     return fillObject(CommentRdo, updatedComment);
   }
 }

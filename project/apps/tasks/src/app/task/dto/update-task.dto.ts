@@ -1,10 +1,29 @@
+import { City } from '@project/shared/app-types';
+import { IsEnum, IsISO8601, IsNumber, IsString } from 'class-validator';
+
 export class UpdateTaskDto {
-  public title: string;
-  public details: string;
+  @IsString()
+  public title?: string;
+
+  @IsString()
+  public details?: string;
+
+  @IsNumber()
   public categoryId: number;
-  public price: number;
-  public deadline: Date;
-  public address: string;
-  public tags: string;
-  public city: string;
+
+  @IsNumber()
+  public price?: number;
+
+  @IsISO8601({}, { message: 'Deadline not correct' })
+  public deadline?: Date;
+
+  @IsString()
+  public address?: string;
+
+  @IsString()
+  public tags?: string;
+
+  @IsString()
+  @IsEnum(City)
+  public city?: string;
 }
