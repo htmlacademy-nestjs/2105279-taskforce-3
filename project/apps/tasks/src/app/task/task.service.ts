@@ -7,6 +7,7 @@ import { Task, TaskStatus } from '@project/shared/app-types';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskEntity } from './task.entity';
 import { TaskTagEntity } from '../task-tag/task-tag.entity';
+import { TaskQuery } from './query/task.query';
 
 @Injectable()
 export class TaskService {
@@ -41,8 +42,8 @@ export class TaskService {
     return this.taskRepository.findById(id);
   }
 
-  async getTasks(): Promise<Task[]> {
-    return this.taskRepository.find();
+  async getTasks(query: TaskQuery): Promise<Task[]> {
+    return this.taskRepository.find(query);
   }
 
   async updateTask(_id: number, _dto: UpdateTaskDto): Promise<Task> {

@@ -51,3 +51,9 @@ Content-Type: application/json
 
 
 ###
+
+# Get all tasks and filtres
+GET http://localhost:3333/api/posts?sortDirection=desc&categories=1&limit=2&page=1 HTTP/1.1
+
+###
+
