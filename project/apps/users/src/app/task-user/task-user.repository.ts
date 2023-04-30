@@ -18,12 +18,12 @@ export class TaskUserRepository implements CRUDRepository<TaskUserEntity, string
   }
 
   public async destroy(id: string): Promise<void> {
-    this.taskUserModel.deleteOne({ id });
+    this.taskUserModel.deleteOne({ _id: id });
   }
 
   public async findById(id: string): Promise<User | null> {
     return this.taskUserModel
-      .findOne({ id })
+      .findOne({ _id: id })
       .exec();
   }
 

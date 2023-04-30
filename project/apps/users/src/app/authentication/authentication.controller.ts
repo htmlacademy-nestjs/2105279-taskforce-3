@@ -8,6 +8,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -42,7 +43,11 @@ export class AuthenticationController {
   public async login(@Body() dto: LoginUserDto) {
     const verifiedUser = await this.authService.verifyUser(dto);
     const loggedUser = await this.authService.createUserToken(verifiedUser);
-    return fillObject(LoggedUserRdo, Object.assign(verifiedUser, loggedUser));
+    const result = fillObject(LoggedUserRdo, Object.assign(verifiedUser, loggedUser));
+    return {
+      ...result,
+      id: verifiedUser._id
+    };
   }
 
   /** Смена пароля*/
@@ -70,8 +75,12 @@ export class AuthenticationController {
   })
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  public async show(@Param('id') id: string) {
+  public async show(@Param('id', MongoidValidationPipe) id: string) {
     const existUser = await this.authService.getUser(id);
-    return fillObject(UserRdo, existUser);
+    const result = fillObject(UserRdo, existUser);
+    return {
+      ...result,
+      id: existUser._id
+    };
   }
 }
