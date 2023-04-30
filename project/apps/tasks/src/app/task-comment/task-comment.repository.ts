@@ -3,6 +3,7 @@ import { Comment } from '@project/shared/app-types';
 import { Injectable } from '@nestjs/common';
 import { CRUDRepository } from '@project/util/util-types';
 import { PrismaService } from '../prisma/prisma.service';
+import { CommentQuery } from './query/comment.query';
 
 @Injectable()
 export class TaskCommentRepository implements CRUDRepository<TaskCommentEntity, number, Comment> {
@@ -33,11 +34,16 @@ export class TaskCommentRepository implements CRUDRepository<TaskCommentEntity, 
     });
   }
 
-  public find(taskId: number): Promise<Comment[]> {
+  public find({ limit, task, page }: CommentQuery): Promise<Comment[]> {
     return this.prisma.comment.findMany({
       where: {
-        taskId
-      }
+        taskId: task
+      },
+      take: limit,
+      orderBy: [
+        { createdAt: 'desc' }
+      ],
+      skip: page > 0 ? limit * (page - 1) : undefined,
     });
   }
 

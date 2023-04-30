@@ -1,9 +1,10 @@
 import { TaskCommentService } from './task-comment.service';
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
 import { fillObject } from '@project/util/util-core';
 import { CommentRdo } from './rdo/comment.rdo';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
+import { CommentQuery } from './query/comment.query';
 
 @Controller('comments')
 export class TaskCommentController {
@@ -17,13 +18,13 @@ export class TaskCommentController {
     return fillObject(CommentRdo, existComment);
   }
 
-  @Get('/task/:id')
-  async index(@Param('id') id: number) {
-    const comment = await this.taskCommentService.getComments(id);
-    return fillObject(CommentRdo, comment);
+  @Get('/')
+  async index(@Query() query: CommentQuery) {
+    const comments = await this.taskCommentService.getComments(query);
+    return fillObject(CommentRdo, comments);
   }
 
-  @Post('/task/:id')
+  @Post('/:id')
   async create(@Param('id') id: number, @Body() dto: CreateCommentDto) {
     const newComment = await this.taskCommentService.createComment(id, dto);
     return fillObject(CommentRdo, newComment);

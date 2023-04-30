@@ -4,6 +4,7 @@ import { TaskCommentRepository } from './task-comment.repository';
 import { Injectable } from '@nestjs/common';
 import { TaskCommentEntity } from './task-comment.entity';
 import { UpdateCommentDto } from './dto/update-comment.dto';
+import { CommentQuery } from './query/comment.query';
 
 @Injectable()
 export class TaskCommentService {
@@ -28,8 +29,8 @@ export class TaskCommentService {
     return this.taskCommentRepository.findById(id);
   }
 
-  async getComments(taskId: number): Promise<Comment[]> {
-    return this.taskCommentRepository.find(taskId);
+  async getComments(query: CommentQuery): Promise<Comment[]> {
+    return this.taskCommentRepository.find(query);
   }
 
   async updateComment(id: number, dto: UpdateCommentDto): Promise<Comment> {
