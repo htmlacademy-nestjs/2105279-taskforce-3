@@ -1,7 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsEnum, IsISO8601, IsString } from 'class-validator';
 import { AUTH_USER_DATE_BIRTH_NOT_VALID, AUTH_USER_EMAIL_NOT_VALID } from '../authentication.constant';
 import { City, UserRole } from '@project/shared/app-types';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
 
