@@ -29,7 +29,7 @@ export class FileController {
   @HttpCode(HttpStatus.CREATED)
   @UseInterceptors(FileInterceptor('file'))
   public async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    const newFile = await this.fileService.saveFile(file);
+    const newFile = await this.fileService.save(file);
     const path = `${this.applicationConfig.serveRoot}${newFile.path}`;
     return fillObject(UploadedFileRdo, Object.assign(newFile, { path }));
   }
@@ -42,7 +42,7 @@ export class FileController {
   })
   @Get(':fileId')
   public async show(@Param('fileId') fileId: string) {
-    const existFile = await this.fileService.getFile(fileId);
+    const existFile = await this.fileService.get(fileId);
     const path = `${this.applicationConfig.serveRoot}${existFile.path}`;
     return fillObject(UploadedFileRdo, Object.assign(existFile, { path }));
   }

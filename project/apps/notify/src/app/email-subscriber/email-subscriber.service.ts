@@ -9,7 +9,7 @@ export class EmailSubscriberService {
     private readonly emailSubscriberRepository: EmailSubscriberRepository
   ) { }
 
-  public async addSubscriber(subscriber: CreateSubscriberDto) {
+  public async add(subscriber: CreateSubscriberDto) {
     const { email } = subscriber;
     const existsSubscriber = await this.emailSubscriberRepository.findByEmail(email);
 

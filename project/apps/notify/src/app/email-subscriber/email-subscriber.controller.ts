@@ -18,7 +18,7 @@ export class EmailSubscriberController {
     queue: 'taskforce.notify',
   })
   public async create(subscriber: CreateSubscriberDto) {
-    this.subscriberService.addSubscriber(subscriber);
+    this.subscriberService.add(subscriber);
     this.mailService.sendNotifyNewSubscriber(subscriber);
   }
 }

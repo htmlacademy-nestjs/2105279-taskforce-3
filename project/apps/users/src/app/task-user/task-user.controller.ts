@@ -37,7 +37,7 @@ export class TaskUserController {
   @Get('customer/:id')
   public async customer(@Param('id', MongoidValidationPipe) id: string) {
 
-    const existUser = await this.userService.getUser(id);
+    const existUser = await this.userService.get(id);
     return fillObject(CustomerUserRdo, existUser);
   }
 
@@ -50,7 +50,7 @@ export class TaskUserController {
   @Get('executer/:id')
   public async executer(@Param('id', MongoidValidationPipe) id: string) {
 
-    const existUser = await this.userService.getUser(id);
+    const existUser = await this.userService.get(id);
     return fillObject(ExecuterUserRdo, existUser);
   }
 }

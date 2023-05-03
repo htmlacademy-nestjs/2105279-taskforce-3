@@ -54,7 +54,7 @@ export class AuthenticationService {
   }
 
   /** Проверка пароля*/
-  public async verifyUser(dto: LoginUserDto) {
+  public async verify(dto: LoginUserDto) {
     const { email, password } = dto;
     const existUser = await this.taskUserRepository.findByEmail(email);
     if (!existUser) {
@@ -71,18 +71,18 @@ export class AuthenticationService {
   /** Смена пароля*/
   public async changePassword(dto: ChangePasswordDto) {
     const { email, password, newPassword } = dto;
-    const taskUser = await this.verifyUser({ email, password });
+    const taskUser = await this.verify({ email, password });
     const userEntity = await new TaskUserEntity(taskUser).setPassword(newPassword);
     return this.taskUserRepository.update(userEntity._id, userEntity);
   }
 
   /** Информация о пользователе*/
-  public async getUser(id: string) {
+  public async get(id: string) {
     return this.taskUserRepository.findById(id);
   }
 
   /* Генерация токена */
-  public async createUserToken(user: User) {
+  public async createToken(user: User) {
     const payload: TokenPayload = {
       sub: user._id,
       email: user.email,

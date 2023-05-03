@@ -45,8 +45,8 @@ export class AuthenticationController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   public async login(@Body() dto: LoginUserDto) {
-    const verifiedUser = await this.authService.verifyUser(dto);
-    const loggedUser = await this.authService.createUserToken(verifiedUser);
+    const verifiedUser = await this.authService.verify(dto);
+    const loggedUser = await this.authService.createToken(verifiedUser);
     const result = fillObject(LoggedUserRdo, Object.assign(verifiedUser, loggedUser));
     return {
       ...result,
@@ -80,7 +80,7 @@ export class AuthenticationController {
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   public async show(@Param('id', MongoidValidationPipe) id: string) {
-    const existUser = await this.authService.getUser(id);
+    const existUser = await this.authService.get(id);
     const result = fillObject(UserRdo, existUser);
     return {
       ...result,

@@ -22,7 +22,7 @@ export class TaskUserService {
   }
 
   /** Информация о пользователе*/
-  public async getUser(id: string) {
+  public async get(id: string) {
     return this.taskUserRepository.findById(id);
   }
 }

@@ -22,7 +22,7 @@ export class TaskCommentController {
   })
   @Get('/:id')
   async show(@Param('id') id: number) {
-    const existComment = await this.taskCommentService.getComment(id);
+    const existComment = await this.taskCommentService.get(id);
     return fillObject(CommentRdo, existComment);
   }
 
@@ -34,7 +34,7 @@ export class TaskCommentController {
   })
   @Get('/')
   async index(@Query() query: CommentQuery) {
-    const comments = await this.taskCommentService.getComments(query);
+    const comments = await this.taskCommentService.getList(query);
     return fillObject(CommentRdo, comments);
   }
 
@@ -46,7 +46,7 @@ export class TaskCommentController {
   @Post('/:id')
   @HttpCode(HttpStatus.CREATED)
   async create(@Param('id') id: number, @Body() dto: CreateCommentDto) {
-    const newComment = await this.taskCommentService.createComment(id, dto);
+    const newComment = await this.taskCommentService.create(id, dto);
     return fillObject(CommentRdo, newComment);
   }
 
@@ -58,7 +58,7 @@ export class TaskCommentController {
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async destroy(@Param('id') id: number) {
-    this.taskCommentService.deleteComment(id);
+    this.taskCommentService.delete(id);
   }
 
   /* Редактирование комментария */
@@ -69,7 +69,7 @@ export class TaskCommentController {
   })
   @Patch('/:id')
   async update(@Param('id') id: number, @Body() dto: UpdateCommentDto) {
-    const updatedComment = await this.taskCommentService.updateComment(id, { ...dto, userId: '18' });
+    const updatedComment = await this.taskCommentService.update(id, { ...dto, userId: '18' });
     return fillObject(CommentRdo, updatedComment);
   }
 }

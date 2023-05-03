@@ -11,24 +11,24 @@ export class TaskReviewService {
     private readonly taskReviewRepository: TaskReviewRepository
   ) { }
 
-  async createReview(dto: CreateReviewDto): Promise<Review> {
+  async create(dto: CreateReviewDto): Promise<Review> {
     const reviewEntity = new TaskReviewEntity(dto);
     return this.taskReviewRepository.create(reviewEntity);
   }
 
-  async deleteReview(id: number): Promise<void> {
+  async delete(id: number): Promise<void> {
     this.taskReviewRepository.destroy(id);
   }
 
-  async getReview(id: number): Promise<Review> {
+  async get(id: number): Promise<Review> {
     return this.taskReviewRepository.findById(id);
   }
 
-  async getReviews(): Promise<Review[]> {
+  async getList(): Promise<Review[]> {
     return this.taskReviewRepository.find();
   }
 
-  async updateReview(id: number, dto: UpdateReviewDto): Promise<Review> {
+  async update(id: number, dto: UpdateReviewDto): Promise<Review> {
     return this.taskReviewRepository.update(id, new TaskReviewEntity(dto));
   }
 }

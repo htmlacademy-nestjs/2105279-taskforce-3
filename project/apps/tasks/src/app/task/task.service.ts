@@ -17,7 +17,7 @@ export class TaskService {
     private readonly taskTagRepository: TaskTagRepository
   ) { }
 
-  async createTask(dto: CreateTaskDto): Promise<Task> {
+  async create(dto: CreateTaskDto): Promise<Task> {
     const tags = dto.tags
       ? await Promise.all(dto.tags
         .split(' ')
@@ -34,19 +34,19 @@ export class TaskService {
     return this.taskRepository.create(taskEntity);
   }
 
-  async deleteTask(id: number): Promise<void> {
+  async delete(id: number): Promise<void> {
     this.taskRepository.destroy(id);
   }
 
-  async getTask(id: number): Promise<Task> {
+  async get(id: number): Promise<Task> {
     return this.taskRepository.findById(id);
   }
 
-  async getTasks(query: TaskQuery): Promise<Task[]> {
+  async getList(query: TaskQuery): Promise<Task[]> {
     return this.taskRepository.find(query);
   }
 
-  async updateTask(_id: number, _dto: UpdateTaskDto): Promise<Task> {
+  async update(_id: number, _dto: UpdateTaskDto): Promise<Task> {
     throw new Error('Not implemented…');
   }
 }
