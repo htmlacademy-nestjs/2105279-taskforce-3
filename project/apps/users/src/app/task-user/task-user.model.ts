@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { User, UserRole } from '@project/shared/app-types';
+import { City, User, UserRole } from '@project/shared/app-types';
 import dayjs from 'dayjs';
 
 @Schema({
@@ -25,8 +25,12 @@ export class TaskUserModel extends Document implements User {
   })
   public email: string;
 
-  @Prop()
-  public city: string;
+  @Prop({
+    required: true,
+    type: String,
+    enum: City
+  })
+  public city: City;
 
   @Prop({
     required: true,
@@ -42,7 +46,6 @@ export class TaskUserModel extends Document implements User {
   public role: UserRole;
 
   @Prop({
-    required: true,
     default: ''
   })
   public avatar: string;
@@ -53,49 +56,41 @@ export class TaskUserModel extends Document implements User {
   public dateBirth: Date;
 
   @Prop({
-    required: true,
     default: 0
   })
   taskCount: number;
 
   @Prop({
-    required: true,
     default: 0
   })
   newCount: number;
 
   @Prop({
-    required: true,
     default: 0
   })
   rating: number;
 
   @Prop({
-    required: true,
     default: 0
   })
   doneCount: number;
 
   @Prop({
-    required: true,
     default: 0
   })
   failedCount: number;
 
   @Prop({
-    required: true,
     default: ''
   })
   info: string;
 
   @Prop({
-    required: true,
     default: ''
   })
   specialization: string;
 
   @Prop({
-    required: true,
     default: 0
   })
   ranking: number;

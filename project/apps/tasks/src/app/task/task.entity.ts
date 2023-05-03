@@ -47,6 +47,10 @@ export class TaskEntity implements Entity<TaskEntity>, Task {
   }
 
   public toObject(): TaskEntity {
-    return { ...this };
+    return {
+      ...this,
+      comments: [...this.comments],
+      tags: [...this.tags],
+    };
   }
 }

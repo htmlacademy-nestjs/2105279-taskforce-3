@@ -24,7 +24,7 @@ export class TaskReviewService {
     return this.taskReviewRepository.findById(id);
   }
 
-  async getCategories(): Promise<Review[]> {
+  async getReviews(): Promise<Review[]> {
     return this.taskReviewRepository.find();
   }
 
