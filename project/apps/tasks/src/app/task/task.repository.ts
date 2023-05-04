@@ -11,7 +11,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
 
   public async create(item: TaskEntity): Promise<Task> {
     const entityData = item.toObject();
-    return this.prisma.task.create({
+    const newTask = await this.prisma.task.create({
       data: {
         ...entityData,
         tags: {
@@ -27,6 +27,8 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
         category: true
       }
     });
+    await this.prisma.update.create({ data: { taskId: newTask.taskId } });
+    return newTask;
   }
 
   public async destroy(taskId: number): Promise<void> {
@@ -70,7 +72,34 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
     });
   }
 
-  public update(_id: number, _item: TaskEntity): Promise<Task> {
-    return Promise.resolve(undefined);
+  public async update(id: number, item: TaskEntity): Promise<Task> {
+    const entityData = item.toObject();
+    const newTask = await this.prisma.task.update({
+      where: {
+        taskId: id
+      },
+      data: {
+        ...entityData,
+        tags: {
+          connect: entityData.tags.map(({ id }) => ({ tagId: id }))
+        },
+        comments: {
+          connect: []
+        },
+      },
+      include: {
+        tags: true,
+        comments: true,
+        category: true
+      }
+    });
+    await this.prisma.update.upsert({
+      where: {
+        taskId: id
+      },
+      update: {},
+      create: { taskId: newTask.taskId }
+    });
+    return newTask;
   }
 }

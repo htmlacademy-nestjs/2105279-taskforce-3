@@ -5,9 +5,18 @@ import { TaskTagModule } from './task-tag/task-tag.module';
 import { TaskReviewModule } from './task-review/task-review.module';
 import { TaskModule } from './task/task.module';
 import { TaskCommentModule } from './task-comment/task-comment.module';
+import { ConfigTasksModule } from '@project/config/config-tasks';
 
 @Module({
-  imports: [PrismaModule, TaskCategoryModule, TaskTagModule, TaskReviewModule, TaskModule, TaskCommentModule],
+  imports: [
+    PrismaModule,
+    TaskCategoryModule,
+    TaskTagModule,
+    TaskReviewModule,
+    TaskModule,
+    TaskCommentModule,
+    ConfigTasksModule
+  ],
   controllers: [],
   providers: [],
 })

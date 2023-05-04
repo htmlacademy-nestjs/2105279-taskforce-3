@@ -50,6 +50,7 @@ model Task {
   comments Comment[]
   Review   Review?
   Respond  Respond?
+  Update   Update[]
 
   @@map("tasks")
 }
@@ -83,4 +84,11 @@ model Respond {
   executerId String @map("executer_id")
 
   @@map("responds")
+}
+
+model Update {
+  taskId Int  @id @map("task_id")
+  task   Task @relation(fields: [taskId], references: [taskId], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("updates")
 }
