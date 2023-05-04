@@ -6,6 +6,7 @@ import { TaskReviewModule } from './task-review/task-review.module';
 import { TaskModule } from './task/task.module';
 import { TaskCommentModule } from './task-comment/task-comment.module';
 import { ConfigTasksModule } from '@project/config/config-tasks';
+import { NotifyModule } from './notify/notify.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { ConfigTasksModule } from '@project/config/config-tasks';
     TaskReviewModule,
     TaskModule,
     TaskCommentModule,
-    ConfigTasksModule
+    ConfigTasksModule,
+    NotifyModule,
   ],
   controllers: [],
   providers: [],

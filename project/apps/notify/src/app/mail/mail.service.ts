@@ -1,7 +1,8 @@
 import { Subscriber } from '@project/shared/app-types';
 import { Injectable } from '@nestjs/common';
-import { EMAIL_ADD_SUBSCRIBER_SUBJECT } from './mail.constant';
+import { EMAIL_ADD_SUBSCRIBER_SUBJECT, EMAIL_UPDATE_TASK } from './mail.constant';
 import { MailerService } from '@nestjs-modules/mailer';
+import { TasksDto } from '../email-subscriber/dto/tasks.dto';
 
 @Injectable()
 export class MailService {
@@ -17,5 +18,21 @@ export class MailService {
         email: `${subscriber.email}`,
       }
     })
+  }
+
+  public async sendNotifications(subscribers: Subscriber[], dto: TasksDto) {
+    const links = dto.ids
+      .map((id) => `<a href="http://localhost:3333/api/tasks/${id}">${id}</a>`)
+      .join('<br>');
+
+    subscribers.map(async (subscriber) => this.mailerService.sendMail({
+      to: subscriber.email,
+      subject: EMAIL_UPDATE_TASK,
+      template: './send-notifications',
+      context: {
+        user: `${subscriber.firstname} ${subscriber.lastname}`,
+        links: links
+      }
+    }));
   }
 }

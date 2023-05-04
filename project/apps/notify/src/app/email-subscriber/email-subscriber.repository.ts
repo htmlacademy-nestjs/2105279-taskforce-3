@@ -28,6 +28,12 @@ export class EmailSubscriberRepository implements CRUDRepository<EmailSubscriber
       .exec();
   }
 
+  public async findRole(role: string): Promise<Subscriber[] | null> {
+    return this.emailSubscriberModel
+      .find({ role })
+      .exec();
+  }
+
   public async update(id: string, item: EmailSubscriberEntity): Promise<Subscriber> {
     return this.emailSubscriberModel
       .findByIdAndUpdate(id, item.toObject(), { new: true })

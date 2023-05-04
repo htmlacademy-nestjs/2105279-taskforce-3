@@ -13,6 +13,9 @@ export class EmailSubscriberModel extends Document implements Subscriber {
   public email: string;
 
   @Prop()
+  public role: string;
+
+  @Prop()
   public firstname: string;
 
   @Prop()
