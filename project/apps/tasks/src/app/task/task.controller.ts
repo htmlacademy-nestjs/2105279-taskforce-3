@@ -6,13 +6,26 @@ import { TaskRdo } from './rdo/task.rdo';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskQuery } from './query/task.query';
+import { NotifyService } from '../notify/notify.service';
 
 @ApiTags('task')
 @Controller('tasks')
 export class TaskController {
   constructor(
-    private readonly taskService: TaskService
+    private readonly taskService: TaskService,
+    private readonly notifyService: NotifyService
   ) { }
+
+  /* Запрос рассылки заданий подписчикам */
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Newsletter to subscribers'
+  })
+  @Get('/notify')
+  async sendNotifications() {
+    const tasks = await this.taskService.getUpdate();
+    await this.notifyService.sendNotifications({ ids: tasks.map((task) => task.taskId) });
+  }
 
   /* Запрос задания по id */
   @ApiResponse({

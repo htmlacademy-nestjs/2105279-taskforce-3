@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { CRUDRepository } from '@project/util/util-types';
 import { PrismaService } from '../prisma/prisma.service';
 import { TaskQuery } from './query/task.query';
+import { Update } from '@prisma/client';
 
 @Injectable()
 export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> {
@@ -15,7 +16,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
       data: {
         ...entityData,
         tags: {
-          connect: entityData.tags.map(({ id }) => ({ tagId: id }))
+          connect: entityData.tags.map(({ tagId }) => ({ tagId }))
         },
         comments: {
           connect: []
@@ -72,6 +73,17 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
     });
   }
 
+  public async findUpdate(): Promise<Update[]> {
+    const updateTasks = await this.prisma.update.findMany({
+      where: {},
+      select: {
+        taskId: true
+      }
+    });
+    updateTasks.map(async (task) => await this.prisma.update.delete({ where: { taskId: task.taskId } }));
+    return updateTasks;
+  }
+
   public async update(id: number, item: TaskEntity): Promise<Task> {
     const entityData = item.toObject();
     const newTask = await this.prisma.task.update({
@@ -81,7 +93,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
       data: {
         ...entityData,
         tags: {
-          connect: entityData.tags.map(({ id }) => ({ tagId: id }))
+          connect: entityData.tags.map(({ tagId }) => ({ tagId }))
         },
         comments: {
           connect: []

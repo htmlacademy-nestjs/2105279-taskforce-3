@@ -25,7 +25,7 @@ export class MailService {
       .map((id) => `<a href="http://localhost:3333/api/tasks/${id}">${id}</a>`)
       .join('<br>');
 
-    subscribers.map(async (subscriber) => this.mailerService.sendMail({
+    subscribers.map(async (subscriber) => await this.mailerService.sendMail({
       to: subscriber.email,
       subject: EMAIL_UPDATE_TASK,
       template: './send-notifications',

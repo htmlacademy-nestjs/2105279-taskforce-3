@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { rabbitConfig } from '@project/config/config-tasks';
 import { ConfigType } from '@nestjs/config';
-import { SendNotificationDto } from './dto/send-notification.dto';
 import { RabbitRouting } from '@project/shared/app-types';
+import { TasksDto } from './dto/tasks.dto';
 
 @Injectable()
 export class NotifyService {
@@ -13,11 +13,11 @@ export class NotifyService {
     private readonly rabbiOptions: ConfigType<typeof rabbitConfig>,
   ) { }
 
-  public async sendNotifications(dto: SendNotificationDto[]) {
-    return this.rabbitClient.publish<SendNotificationDto[]>(
+  public async sendNotifications(dto: TasksDto) {
+    return this.rabbitClient.publish<TasksDto>(
       this.rabbiOptions.exchange,
       RabbitRouting.SendNotifications,
-      [...dto]
+      { ids: dto.ids.map((id) => id) }
     );
   }
 }

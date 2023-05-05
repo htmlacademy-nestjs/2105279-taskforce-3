@@ -4,6 +4,7 @@ import { Subscriber } from '@project/shared/app-types';
 export class EmailSubscriberEntity implements Entity<EmailSubscriberEntity>, Subscriber {
   public id: string;
   public email: string;
+  public role: string;
   public firstname: string;
   public lastname: string;
   public userId: string;
@@ -14,6 +15,7 @@ export class EmailSubscriberEntity implements Entity<EmailSubscriberEntity>, Sub
 
   public fillEntity(entity) {
     this.email = entity.email;
+    this.role = entity.role;
     this.lastname = entity.lastname;
     this.firstname = entity.firstname;
     this.id = entity.id ?? '';

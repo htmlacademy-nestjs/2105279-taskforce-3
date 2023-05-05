@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { TaskRepository } from './task.repository';
 import { TaskCategoryRepository } from '../task-category/task-category.repository';
-import { TaskTagRepository } from '../task-tag/task-category.repository';
+import { TaskTagRepository } from '../task-tag/task-tag.repository';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { Task, TaskStatus } from '@project/shared/app-types';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskEntity } from './task.entity';
 import { TaskTagEntity } from '../task-tag/task-tag.entity';
 import { TaskQuery } from './query/task.query';
+import { Update } from '@prisma/client';
 
 @Injectable()
 export class TaskService {
@@ -18,18 +19,7 @@ export class TaskService {
   ) { }
 
   async create(dto: CreateTaskDto): Promise<Task> {
-    const tags = dto.tags
-      ? await Promise.all(dto.tags
-        .split(' ')
-        .map(async (name) => {
-          const tag = await this.taskTagRepository.findByName(name);
-          if (tag) {
-            return tag;
-          }
-          return await this.taskTagRepository.create(new TaskTagEntity({ name }));
-        }))
-      : [];
-
+    const tags = await this.parseTags(dto.tags);
     const taskEntity = new TaskEntity({ ...dto, status: TaskStatus.New, comments: [], tags, customerId: '22' });
     return this.taskRepository.create(taskEntity);
   }
@@ -46,7 +36,27 @@ export class TaskService {
     return this.taskRepository.find(query);
   }
 
-  async update(_id: number, _dto: UpdateTaskDto): Promise<Task> {
-    throw new Error('Not implemented…');
+  async getUpdate(): Promise<Update[]> {
+    return this.taskRepository.findUpdate();
+  }
+
+  async update(id: number, dto: UpdateTaskDto): Promise<Task> {
+    const task = await this.taskRepository.findById(id);
+    const tags = await this.parseTags(dto.tags);
+    return this.taskRepository.update(id, new TaskEntity({ ...task, ...dto, tags }));
+  }
+
+  private async parseTags(tags: string) {
+    return tags
+      ? await Promise.all(tags
+        .split(' ')
+        .map(async (name) => {
+          const tag = await this.taskTagRepository.findByName(name);
+          if (tag) {
+            return tag;
+          }
+          return await this.taskTagRepository.create(new TaskTagEntity({ name }));
+        }))
+      : [];
   }
 }
