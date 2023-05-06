@@ -12,7 +12,7 @@ export class TaskCommentService {
     private readonly taskCommentRepository: TaskCommentRepository
   ) { }
 
-  async createComment(taskId: number, dto: CreateCommentDto): Promise<Comment> {
+  async create(taskId: number, dto: CreateCommentDto): Promise<Comment> {
     const categoryEntity = new TaskCommentEntity({
       ...dto,
       taskId,
@@ -21,19 +21,19 @@ export class TaskCommentService {
     return this.taskCommentRepository.create(categoryEntity);
   }
 
-  async deleteComment(id: number): Promise<void> {
+  async delete(id: number): Promise<void> {
     this.taskCommentRepository.destroy(id);
   }
 
-  async getComment(id: number): Promise<Comment> {
+  async get(id: number): Promise<Comment> {
     return this.taskCommentRepository.findById(id);
   }
 
-  async getComments(query: CommentQuery): Promise<Comment[]> {
+  async getList(query: CommentQuery): Promise<Comment[]> {
     return this.taskCommentRepository.find(query);
   }
 
-  async updateComment(id: number, dto: UpdateCommentDto): Promise<Comment> {
+  async update(id: number, dto: UpdateCommentDto): Promise<Comment> {
     const comment = await this.taskCommentRepository.findById(id);
     return this.taskCommentRepository.update(id, new TaskCommentEntity({
       ...dto,

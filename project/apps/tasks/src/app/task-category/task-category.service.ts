@@ -11,24 +11,24 @@ export class TaskCategoryService {
     private readonly taskCategoryRepository: TaskCategoryRepository
   ) { }
 
-  async createCategory(dto: CreateCategoryDto): Promise<Category> {
+  async create(dto: CreateCategoryDto): Promise<Category> {
     const categoryEntity = new TaskCategoryEntity(dto);
     return this.taskCategoryRepository.create(categoryEntity);
   }
 
-  async deleteCategory(id: number): Promise<void> {
+  async delete(id: number): Promise<void> {
     this.taskCategoryRepository.destroy(id);
   }
 
-  async getCategory(id: number): Promise<Category> {
+  async get(id: number): Promise<Category> {
     return this.taskCategoryRepository.findById(id);
   }
 
-  async getCategories(): Promise<Category[]> {
+  async getList(): Promise<Category[]> {
     return this.taskCategoryRepository.find();
   }
 
-  async updateCategory(id: number, dto: UpdateCategoryDto): Promise<Category> {
+  async update(id: number, dto: UpdateCategoryDto): Promise<Category> {
     return this.taskCategoryRepository.update(id, new TaskCategoryEntity(dto));
   }
 }

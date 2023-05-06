@@ -21,7 +21,7 @@ export class TaskCategoryController {
   })
   @Get('/:id')
   async show(@Param('id') id: number) {
-    const existCategory = await this.taskCategoryService.getCategory(id);
+    const existCategory = await this.taskCategoryService.get(id);
     return fillObject(CategoryRdo, existCategory);
   }
 
@@ -33,7 +33,7 @@ export class TaskCategoryController {
   })
   @Get('/')
   async index() {
-    const categories = await this.taskCategoryService.getCategories();
+    const categories = await this.taskCategoryService.getList();
     return fillObject(CategoryRdo, categories);
   }
 
@@ -45,7 +45,7 @@ export class TaskCategoryController {
   @HttpCode(HttpStatus.CREATED)
   @Post('/')
   async create(@Body() dto: CreateCategoryDto) {
-    const newCategory = await this.taskCategoryService.createCategory(dto);
+    const newCategory = await this.taskCategoryService.create(dto);
     return fillObject(CategoryRdo, newCategory);
   }
 
@@ -57,7 +57,7 @@ export class TaskCategoryController {
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async destroy(@Param('id') id: number) {
-    this.taskCategoryService.deleteCategory(id);
+    this.taskCategoryService.delete(id);
   }
 
   /* Редактирование категории */
@@ -68,7 +68,7 @@ export class TaskCategoryController {
   })
   @Patch('/:id')
   async update(@Param('id') id: number, @Body() dto: UpdateCategoryDto) {
-    const updatedCategory = await this.taskCategoryService.updateCategory(id, dto)
+    const updatedCategory = await this.taskCategoryService.update(id, dto)
     return fillObject(CategoryRdo, updatedCategory);
   }
 }

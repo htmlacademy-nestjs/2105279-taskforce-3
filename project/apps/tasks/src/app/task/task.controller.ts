@@ -6,13 +6,26 @@ import { TaskRdo } from './rdo/task.rdo';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskQuery } from './query/task.query';
+import { NotifyService } from '../notify/notify.service';
 
 @ApiTags('task')
 @Controller('tasks')
 export class TaskController {
   constructor(
-    private readonly taskService: TaskService
+    private readonly taskService: TaskService,
+    private readonly notifyService: NotifyService
   ) { }
+
+  /* Запрос рассылки заданий подписчикам */
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Newsletter to subscribers'
+  })
+  @Get('/notify')
+  async sendNotifications() {
+    const tasks = await this.taskService.getUpdate();
+    await this.notifyService.sendNotifications({ ids: tasks.map((task) => task.taskId) });
+  }
 
   /* Запрос задания по id */
   @ApiResponse({
@@ -22,7 +35,7 @@ export class TaskController {
   })
   @Get('/:id')
   async show(@Param('id') id: number) {
-    const task = await this.taskService.getTask(id);
+    const task = await this.taskService.get(id);
     return fillObject(TaskRdo, task);
   }
 
@@ -34,7 +47,7 @@ export class TaskController {
   })
   @Get('/')
   async index(@Query() query: TaskQuery) {
-    const tasks = await this.taskService.getTasks(query);
+    const tasks = await this.taskService.getList(query);
     return fillObject(TaskRdo, tasks);
   }
 
@@ -46,7 +59,7 @@ export class TaskController {
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreateTaskDto) {
-    const newTask = await this.taskService.createTask(dto);
+    const newTask = await this.taskService.create(dto);
     return fillObject(TaskRdo, newTask);
   }
 
@@ -58,7 +71,7 @@ export class TaskController {
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async destroy(@Param('id') id: number) {
-    this.taskService.deleteTask(id);
+    this.taskService.delete(id);
   }
 
   /* Редактирование задания */
@@ -69,7 +82,7 @@ export class TaskController {
   })
   @Patch('/:id')
   async update(@Param('id') id: number, @Body() dto: UpdateTaskDto) {
-    const updatedTask = await this.taskService.updateTask(id, dto);
+    const updatedTask = await this.taskService.update(id, dto);
     return fillObject(TaskRdo, updatedTask)
   }
 }

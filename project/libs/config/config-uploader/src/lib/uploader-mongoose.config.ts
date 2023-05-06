@@ -7,12 +7,12 @@ export function getMongooseOptions(): MongooseModuleAsyncOptions {
     useFactory: async (config: ConfigService) => {
       return {
         uri: getMongoConnectionString({
-          username: config.get<string>('application.dbUser'),
-          password: config.get<string>('application.dbPassword'),
-          host: config.get<string>('application.dbHost'),
-          port: config.get<string>('application.dbPort'),
-          authDatabase: config.get<string>('application.dbAuthBase'),
-          databaseName: config.get<string>('application.dbName'),
+          username: config.get<string>('uploader.dbUser'),
+          password: config.get<string>('uploader.dbPassword'),
+          host: config.get<string>('uploader.dbHost'),
+          port: config.get<string>('uploader.dbPort'),
+          authDatabase: config.get<string>('uploader.dbAuthBase'),
+          databaseName: config.get<string>('uploader.dbName'),
         })
       }
     },

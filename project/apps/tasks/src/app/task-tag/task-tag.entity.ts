@@ -2,7 +2,7 @@ import { Entity } from '@project/util/util-types';
 import { Tag } from '@project/shared/app-types';
 
 export class TaskTagEntity implements Entity<TaskTagEntity>, Tag {
-  public id: number;
+  public tagId: number;
   public name: string;
 
   constructor(tag: Tag) {
@@ -11,7 +11,7 @@ export class TaskTagEntity implements Entity<TaskTagEntity>, Tag {
 
   public fillEntity(entity: Tag) {
     this.name = entity.name;
-    this.id = entity.id;
+    this.tagId = entity.tagId;
   }
 
   public toObject(): TaskTagEntity {

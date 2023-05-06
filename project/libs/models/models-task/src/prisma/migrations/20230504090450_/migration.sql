@@ -29,7 +29,7 @@ CREATE TABLE "tasks" (
     "customerId" TEXT,
     "executerId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "publishAt" TIMESTAMP(3) NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "tasks_pkey" PRIMARY KEY ("task_id")
 );
@@ -57,12 +57,19 @@ CREATE TABLE "reviews" (
 );
 
 -- CreateTable
-CREATE TABLE "Respond" (
+CREATE TABLE "responds" (
     "respond_id" SERIAL NOT NULL,
     "task_id" INTEGER NOT NULL,
     "executer_id" TEXT NOT NULL,
 
-    CONSTRAINT "Respond_pkey" PRIMARY KEY ("respond_id")
+    CONSTRAINT "responds_pkey" PRIMARY KEY ("respond_id")
+);
+
+-- CreateTable
+CREATE TABLE "updates" (
+    "task_id" INTEGER NOT NULL,
+
+    CONSTRAINT "updates_pkey" PRIMARY KEY ("task_id")
 );
 
 -- CreateTable
@@ -72,10 +79,13 @@ CREATE TABLE "_TagToTask" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "tags_name_key" ON "tags"("name");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "reviews_task_id_key" ON "reviews"("task_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Respond_task_id_key" ON "Respond"("task_id");
+CREATE UNIQUE INDEX "responds_task_id_key" ON "responds"("task_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_TagToTask_AB_unique" ON "_TagToTask"("A", "B");
@@ -93,7 +103,10 @@ ALTER TABLE "comments" ADD CONSTRAINT "comments_task_id_fkey" FOREIGN KEY ("task
 ALTER TABLE "reviews" ADD CONSTRAINT "reviews_task_id_fkey" FOREIGN KEY ("task_id") REFERENCES "tasks"("task_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Respond" ADD CONSTRAINT "Respond_task_id_fkey" FOREIGN KEY ("task_id") REFERENCES "tasks"("task_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "responds" ADD CONSTRAINT "responds_task_id_fkey" FOREIGN KEY ("task_id") REFERENCES "tasks"("task_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "updates" ADD CONSTRAINT "updates_task_id_fkey" FOREIGN KEY ("task_id") REFERENCES "tasks"("task_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_TagToTask" ADD CONSTRAINT "_TagToTask_A_fkey" FOREIGN KEY ("A") REFERENCES "tags"("tag_id") ON DELETE CASCADE ON UPDATE CASCADE;

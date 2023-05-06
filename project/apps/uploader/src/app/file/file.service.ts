@@ -47,7 +47,7 @@ export class FileService {
     };
   }
 
-  public async saveFile(file: Express.Multer.File) {
+  public async save(file: Express.Multer.File) {
     const writedFile = await this.writeFile(file);
     const newFile = new FileEntity({
       size: file.size,
@@ -60,7 +60,7 @@ export class FileService {
     return this.fileRepository.create(newFile);
   }
 
-  public async getFile(fileId: string) {
+  public async get(fileId: string) {
     const existFile = await this.fileRepository.findById(fileId);
 
     if (!existFile) {

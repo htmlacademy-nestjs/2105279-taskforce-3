@@ -21,7 +21,7 @@ export class TaskReviewController {
   })
   @Get('/:id')
   async show(@Param('id') id: number) {
-    const existReview = await this.taskReviewService.getReview(id);
+    const existReview = await this.taskReviewService.get(id);
     return fillObject(ReviewRdo, existReview);
   }
 
@@ -33,7 +33,7 @@ export class TaskReviewController {
   })
   @Get('/')
   async index() {
-    const categories = await this.taskReviewService.getReviews();
+    const categories = await this.taskReviewService.getList();
     return fillObject(ReviewRdo, categories);
   }
 
@@ -45,7 +45,7 @@ export class TaskReviewController {
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreateReviewDto) {
-    const newReview = await this.taskReviewService.createReview(dto);
+    const newReview = await this.taskReviewService.create(dto);
     return fillObject(ReviewRdo, newReview);
   }
 
@@ -57,7 +57,7 @@ export class TaskReviewController {
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async destroy(@Param('id') id: number) {
-    this.taskReviewService.deleteReview(id);
+    this.taskReviewService.delete(id);
   }
 
   /* Редактирование отзыва */
@@ -68,7 +68,7 @@ export class TaskReviewController {
   })
   @Patch('/:id')
   async update(@Param('id') id: number, @Body() dto: UpdateReviewDto) {
-    const updatedReview = await this.taskReviewService.updateReview(id, dto)
+    const updatedReview = await this.taskReviewService.update(id, dto)
     return fillObject(ReviewRdo, updatedReview);
   }
 }
