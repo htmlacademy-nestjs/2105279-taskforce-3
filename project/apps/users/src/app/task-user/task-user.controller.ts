@@ -7,6 +7,8 @@ import { ExecuterUserRdo } from './rdo/executer-user.rdo';
 import { TaskUserService } from './task-user.service';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 import { JwtAuthGuard } from '../authentication/guards/jwt-auth.guard';
+import dayjs from 'dayjs';
+import { MIN_YEAR_USER_OLD, AUTH_USER_NOT_18_YEAR_OLD } from '../authentication/authentication.constant';
 
 @ApiTags('profile')
 @Controller('user')
@@ -24,6 +26,10 @@ export class TaskUserController {
   @UseGuards(JwtAuthGuard)
   @Patch('update/:id')
   public async update(@Param('id', MongoidValidationPipe) id: string, @Body() dto: UpdateUserDto) {
+    const old = dayjs(dto.dateBirth).diff(Date(), 'year');
+    if (old < MIN_YEAR_USER_OLD) {
+      throw Error(AUTH_USER_NOT_18_YEAR_OLD);
+    }
     const taskUser = await this.userService.update(id, dto);
     return fillObject(CustomerUserRdo, taskUser);
   }

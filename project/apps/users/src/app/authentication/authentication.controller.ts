@@ -10,6 +10,8 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 import { NotifyService } from '../notify/notify.service';
+import dayjs from 'dayjs';
+import { AUTH_USER_NOT_18_YEAR_OLD, MIN_YEAR_USER_OLD } from './authentication.constant';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -26,9 +28,13 @@ export class AuthenticationController {
   })
   @Post('register')
   public async create(@Body() dto: CreateUserDto) {
+    const old = dayjs(dto.dateBirth).diff(Date(), 'year');
+    if (old < MIN_YEAR_USER_OLD) {
+      throw Error(AUTH_USER_NOT_18_YEAR_OLD);
+    }
     const newUser = await this.authService.register(dto);
-    const { email, name } = newUser;
-    await this.notifyService.registerSubscriber({ email, name });
+    const { email, role, name } = newUser;
+    await this.notifyService.registerSubscriber({ email, role, name });
     return fillObject(UserRdo, newUser);
   }
 
