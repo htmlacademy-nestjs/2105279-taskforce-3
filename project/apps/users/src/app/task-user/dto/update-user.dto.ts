@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsISO8601, IsString } from 'class-validator';
+import { IsEnum, IsISO8601, IsString, MaxLength, MinLength } from 'class-validator';
 import { AUTH_USER_DATE_BIRTH_NOT_VALID } from '../../authentication/authentication.constant';
 import { City } from '@project/shared/app-types';
 
@@ -10,14 +10,9 @@ export class UpdateUserDto {
     example: 'Keks',
   })
   @IsString()
-  public firstname?: string;
-
-  @ApiProperty({
-    description: 'User last name',
-    example: 'Ivanov'
-  })
-  @IsString()
-  public lastname?: string;
+  @MinLength(3)
+  @MaxLength(50)
+  public name?: string;
 
   @ApiProperty({
     description: 'User birth date',
@@ -31,6 +26,7 @@ export class UpdateUserDto {
     example: 'Студент'
   })
   @IsString()
+  @MaxLength(300)
   public info?: string;
 
   @ApiProperty({

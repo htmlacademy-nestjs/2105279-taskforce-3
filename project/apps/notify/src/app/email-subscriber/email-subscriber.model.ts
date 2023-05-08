@@ -16,10 +16,7 @@ export class EmailSubscriberModel extends Document implements Subscriber {
   public role: string;
 
   @Prop()
-  public firstname: string;
-
-  @Prop()
-  public lastname: string;
+  public name: string;
 }
 
 export const EmailSubscriberSchema = SchemaFactory.createForClass(EmailSubscriberModel);

@@ -21,11 +21,10 @@ export class AuthenticationService {
 
   /** Регистрация пользователя*/
   public async register(dto: CreateUserDto) {
-    const { firstname, lastname, email, city, password, role, dateBirth } = dto;
+    const { name, email, city, password, role, dateBirth } = dto;
 
     const taskUser = {
-      firstname,
-      lastname,
+      name,
       email,
       city,
       passwordHash: '',
@@ -87,8 +86,7 @@ export class AuthenticationService {
       sub: user._id,
       email: user.email,
       role: user.role,
-      lastname: user.lastname,
-      firstname: user.firstname,
+      name: user.name,
     };
 
     return {

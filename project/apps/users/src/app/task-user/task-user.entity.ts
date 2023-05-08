@@ -6,8 +6,7 @@ import { SALT_ROUNDS } from './task-user.constant';
 export class TaskUserEntity implements User {
 
   public _id?: string;
-  public firstname: string;
-  public lastname: string;
+  public name: string;
   public email: string;
   public city: string;
   public passwordHash: string;
@@ -36,8 +35,7 @@ export class TaskUserEntity implements User {
   public fillEntity(taskUser: User) {
 
     this._id = taskUser._id;
-    this.firstname = taskUser.firstname;
-    this.lastname = taskUser.lastname;
+    this.name = taskUser.name;
     this.email = taskUser.email;
     this.city = taskUser.city;
     this.passwordHash = taskUser.passwordHash;

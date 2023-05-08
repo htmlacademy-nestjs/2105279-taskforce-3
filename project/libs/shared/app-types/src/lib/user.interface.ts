@@ -1,7 +1,6 @@
 export interface User {
   _id?: string;
-  firstname: string;
-  lastname: string;
+  name: string;
   email: string;
   city: string;
   passwordHash: string;

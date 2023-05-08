@@ -16,14 +16,7 @@ export class ExecuterUserRdo {
     example: 'Keks'
   })
   @Expose()
-  public firstname: string;
-
-  @ApiProperty({
-    description: 'User last name',
-    example: 'Keks'
-  })
-  @Expose()
-  public lastname: string;
+  public name: string;
 
   @ApiProperty({
     description: 'User email',

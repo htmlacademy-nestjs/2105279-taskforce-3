@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsISO8601, IsString } from 'class-validator';
+import { IsEmail, IsEnum, IsISO8601, IsString, MaxLength, MinLength } from 'class-validator';
 import { AUTH_USER_DATE_BIRTH_NOT_VALID, AUTH_USER_EMAIL_NOT_VALID } from '../authentication.constant';
 import { City, UserRole } from '@project/shared/app-types';
 import { ApiProperty } from '@nestjs/swagger';
@@ -10,14 +10,9 @@ export class CreateUserDto {
     example: 'Keks',
   })
   @IsString()
-  public firstname: string;
-
-  @ApiProperty({
-    description: 'User last name',
-    example: 'Ivanov'
-  })
-  @IsString()
-  public lastname: string;
+  @MinLength(3)
+  @MaxLength(50)
+  public name: string;
 
   @ApiProperty({
     description: 'User unique address',
@@ -39,6 +34,8 @@ export class CreateUserDto {
     example: '123456'
   })
   @IsString()
+  @MinLength(6)
+  @MaxLength(12)
   public password: string;
 
   @ApiProperty({

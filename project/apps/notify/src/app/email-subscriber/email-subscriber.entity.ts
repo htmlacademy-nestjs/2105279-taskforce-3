@@ -5,8 +5,7 @@ export class EmailSubscriberEntity implements Entity<EmailSubscriberEntity>, Sub
   public id: string;
   public email: string;
   public role: string;
-  public firstname: string;
-  public lastname: string;
+  public name: string;
   public userId: string;
 
   constructor(emailSubscriber: Subscriber) {
@@ -16,8 +15,7 @@ export class EmailSubscriberEntity implements Entity<EmailSubscriberEntity>, Sub
   public fillEntity(entity) {
     this.email = entity.email;
     this.role = entity.role;
-    this.lastname = entity.lastname;
-    this.firstname = entity.firstname;
+    this.name = entity.name;
     this.id = entity.id ?? '';
   }
 
