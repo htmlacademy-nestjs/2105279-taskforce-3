@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { fillObject } from '@project/util/util-core';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -7,6 +7,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskQuery } from './query/task.query';
 import { NotifyService } from '../notify/notify.service';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('task')
 @Controller('tasks')
@@ -21,6 +22,7 @@ export class TaskController {
     status: HttpStatus.OK,
     description: 'Newsletter to subscribers'
   })
+  @UseGuards(JwtAuthGuard)
   @Get('/notify')
   async sendNotifications() {
     const tasks = await this.taskService.getUpdate();
@@ -56,6 +58,7 @@ export class TaskController {
     status: HttpStatus.CREATED,
     description: 'The new task has been successfully created.'
   })
+  @UseGuards(JwtAuthGuard)
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreateTaskDto) {
@@ -68,6 +71,7 @@ export class TaskController {
     status: HttpStatus.NO_CONTENT,
     description: 'Task deleted'
   })
+  @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async destroy(@Param('id') id: number) {
@@ -80,6 +84,7 @@ export class TaskController {
     status: HttpStatus.OK,
     description: 'Task edited'
   })
+  @UseGuards(JwtAuthGuard)
   @Patch('/:id')
   async update(@Param('id') id: number, @Body() dto: UpdateTaskDto) {
     const updatedTask = await this.taskService.update(id, dto);
