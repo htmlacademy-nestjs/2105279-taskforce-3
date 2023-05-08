@@ -9,6 +9,7 @@ import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 import { JwtAuthGuard } from '../authentication/guards/jwt-auth.guard';
 import dayjs from 'dayjs';
 import { MIN_YEAR_USER_OLD, AUTH_USER_NOT_18_YEAR_OLD } from '../authentication/authentication.constant';
+import { MAX_SPECIALIZATION_COUNT } from './task-user.constant';
 
 @ApiTags('profile')
 @Controller('user')
@@ -30,6 +31,14 @@ export class TaskUserController {
     if (old < MIN_YEAR_USER_OLD) {
       throw Error(AUTH_USER_NOT_18_YEAR_OLD);
     }
+    const specialization = [];
+    dto.specialization.split(' ').forEach((item) => {
+      if (!specialization.some((spec) => spec === item)) {
+        specialization.push(item);
+      }
+    });
+    dto.specialization = specialization.slice(0, MAX_SPECIALIZATION_COUNT - 1).join(' ');
+
     const taskUser = await this.userService.update(id, dto);
     return fillObject(CustomerUserRdo, taskUser);
   }
