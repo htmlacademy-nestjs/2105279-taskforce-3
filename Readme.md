@@ -1,7 +1,7 @@
 # Личный проект «TaskForce»
 
 * Студент: [Андрей Фомин](https://up.htmlacademy.ru/nodejs-2/3/user/2105279).
-* Наставник: [Олег Зубов](https://htmlacademy.ru/profile/id42701).
+* Наставник: [Роман Решетников](https://htmlacademy.ru/profile/id1919895).
 
 ---
 
