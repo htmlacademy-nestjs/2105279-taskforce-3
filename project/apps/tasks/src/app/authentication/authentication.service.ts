@@ -13,6 +13,7 @@ export class AuthenticationService {
 
   /* Извлечение из токена */
   public async getPayload(token: string): Promise<TokenPayload> {
-    return this.jwtService.decode(token) as unknown as TokenPayload;
+    const payload = this.jwtService.decode(token.split(' ')[1]);
+    return payload as unknown as TokenPayload;
   }
 }
