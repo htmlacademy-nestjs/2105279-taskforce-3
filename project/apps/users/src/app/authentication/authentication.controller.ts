@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { fillObject } from '@project/util/util-core';
@@ -54,10 +54,7 @@ export class AuthenticationController {
     const verifiedUser = await this.authService.verify(dto);
     const loggedUser = await this.authService.createToken(verifiedUser);
     const result = fillObject(LoggedUserRdo, Object.assign(verifiedUser, loggedUser));
-    return {
-      ...result,
-      id: verifiedUser._id
-    };
+    return result;
   }
 
   /** Смена пароля*/
@@ -73,8 +70,13 @@ export class AuthenticationController {
   @UseGuards(JwtAuthGuard)
   @Patch('change')
   @HttpCode(HttpStatus.OK)
-  public async changePassword(@Body() dto: ChangePasswordDto) {
-    const userEntity = await this.authService.changePassword(dto);
+  public async changePassword(@Body() dto: ChangePasswordDto, @Req() req: Request) {
+    const token = await this.authService.getPayload(req.headers['authorization']);
+    const verifiedUser = await this.authService.verify(dto);
+    let userEntity;
+    if (token.sub === verifiedUser._id.toString()) {
+      userEntity = await this.authService.changePassword(dto);
+    }
     return fillObject(LoggedUserRdo, userEntity);
   }
 

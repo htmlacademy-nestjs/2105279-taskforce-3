@@ -7,14 +7,16 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskQuery } from './query/task.query';
 import { NotifyService } from '../notify/notify.service';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { JwtAuthGuard } from '../authentication/guards/jwt-auth.guard';
 
 @ApiTags('task')
 @Controller('tasks')
 export class TaskController {
   constructor(
     private readonly taskService: TaskService,
-    private readonly notifyService: NotifyService
+    private readonly notifyService: NotifyService,
+    private readonly authenticationService: AuthenticationService
   ) { }
 
   /* Запрос рассылки заданий подписчикам */

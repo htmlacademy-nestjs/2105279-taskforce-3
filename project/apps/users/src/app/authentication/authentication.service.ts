@@ -93,4 +93,10 @@ export class AuthenticationService {
       accessToken: await this.jwtService.signAsync(payload),
     }
   }
+
+  /* Извлечение из токена */
+  public async getPayload(token: string): Promise<TokenPayload> {
+    const payload = this.jwtService.decode(token.split(' ')[1]);
+    return payload as unknown as TokenPayload;
+  }
 }
