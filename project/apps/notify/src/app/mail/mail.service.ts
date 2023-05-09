@@ -14,7 +14,7 @@ export class MailService {
       subject: EMAIL_ADD_SUBSCRIBER_SUBJECT,
       template: './add-subscriber',
       context: {
-        user: `${subscriber.firstname} ${subscriber.lastname}`,
+        user: subscriber.name,
         email: `${subscriber.email}`,
       }
     })
@@ -30,7 +30,7 @@ export class MailService {
       subject: EMAIL_UPDATE_TASK,
       template: './send-notifications',
       context: {
-        user: `${subscriber.firstname} ${subscriber.lastname}`,
+        user: subscriber.name,
         links: links
       }
     }));

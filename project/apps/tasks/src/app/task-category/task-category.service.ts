@@ -3,7 +3,6 @@ import { Category } from '@project/shared/app-types';
 import { TaskCategoryRepository } from './task-category.repository';
 import { Injectable } from '@nestjs/common';
 import { TaskCategoryEntity } from './task-category.entity';
-import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Injectable()
 export class TaskCategoryService {
@@ -28,7 +27,7 @@ export class TaskCategoryService {
     return this.taskCategoryRepository.find();
   }
 
-  async update(id: number, dto: UpdateCategoryDto): Promise<Category> {
+  async update(id: number, dto: CreateCategoryDto): Promise<Category> {
     return this.taskCategoryRepository.update(id, new TaskCategoryEntity(dto));
   }
 }

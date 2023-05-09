@@ -18,14 +18,17 @@ export class TaskService {
     private readonly taskTagRepository: TaskTagRepository
   ) { }
 
-  async create(dto: CreateTaskDto): Promise<Task> {
+  async create(dto: CreateTaskDto, customerId: string): Promise<Task> {
     const tags = await this.parseTags(dto.tags);
-    const taskEntity = new TaskEntity({ ...dto, status: TaskStatus.New, comments: [], tags, customerId: '22' });
+    const taskEntity = new TaskEntity({ ...dto, status: TaskStatus.New, comments: [], tags, customerId });
     return this.taskRepository.create(taskEntity);
   }
 
-  async delete(id: number): Promise<void> {
-    this.taskRepository.destroy(id);
+  async delete(id: number, customerId: string): Promise<void> {
+    const task = await this.taskRepository.findById(id);
+    if (task?.customerId === customerId) {
+      this.taskRepository.destroy(id);
+    }
   }
 
   async get(id: number): Promise<Task> {
@@ -40,10 +43,12 @@ export class TaskService {
     return this.taskRepository.findUpdate();
   }
 
-  async update(id: number, dto: UpdateTaskDto): Promise<Task> {
+  async update(id: number, dto: UpdateTaskDto, customerId: string): Promise<Task> {
     const task = await this.taskRepository.findById(id);
-    const tags = await this.parseTags(dto.tags);
-    return this.taskRepository.update(id, new TaskEntity({ ...task, ...dto, tags }));
+    if (task.customerId === customerId) {
+      const tags = await this.parseTags(dto.tags);
+      return this.taskRepository.update(id, new TaskEntity({ ...task, ...dto, tags }));
+    }
   }
 
   private async parseTags(tags: string) {

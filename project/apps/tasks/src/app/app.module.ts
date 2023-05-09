@@ -7,9 +7,11 @@ import { TaskModule } from './task/task.module';
 import { TaskCommentModule } from './task-comment/task-comment.module';
 import { ConfigTasksModule } from '@project/config/config-tasks';
 import { NotifyModule } from './notify/notify.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
+    AuthenticationModule,
     PrismaModule,
     TaskCategoryModule,
     TaskTagModule,

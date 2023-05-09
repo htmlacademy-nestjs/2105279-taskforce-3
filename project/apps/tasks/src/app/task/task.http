@@ -1,9 +1,10 @@
 # Create a new task
 POST http://localhost:3333/api/tasks HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDUyNDMzOTZkMjA5MDhhYWNlM2FhMWQiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoi0YF1c3RvbWVyIiwiaWF0IjoxNjgzNjIyNzk5LCJleHAiOjE2ODM2Mjg3OTl9.0rXGiSlmoOE-T-rjWrGG5r0RliXXcaEcrBE-mj7ybxc
 
 {
-  "title": "Доставка 2",
+  "title": "Доставка 3",
   "details": "Из пункта Б в пункт А",
   "price": 500,
   "address": "Пункты А и Б",
@@ -18,7 +19,8 @@ Content-Type: application/json
 ###
 
 # Delete task by id
-DELETE http://localhost:3333/api/tasks/3 HTTP/1.1
+DELETE http://localhost:3333/api/tasks/7 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDUyNDMzOTZkMjA5MDhhYWNlM2FhMWQiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoi0YF1c3RvbWVyIiwiaWF0IjoxNjgzNjIyNzk5LCJleHAiOjE2ODM2Mjg3OTl9.0rXGiSlmoOE-T-rjWrGG5r0RliXXcaEcrBE-mj7ybxc
 
 ###
 

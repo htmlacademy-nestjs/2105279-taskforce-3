@@ -1,17 +1,19 @@
 import { TaskCommentService } from './task-comment.service';
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, Req } from '@nestjs/common';
 import { fillObject } from '@project/util/util-core';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CommentRdo } from './rdo/comment.rdo';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { CommentQuery } from './query/comment.query';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @ApiTags('task-comment')
 @Controller('comments')
 export class TaskCommentController {
   constructor(
-    private readonly taskCommentService: TaskCommentService
+    private readonly taskCommentService: TaskCommentService,
+    private readonly authService: AuthenticationService
   ) { }
 
   /* Запрос комментария по id */
@@ -45,8 +47,9 @@ export class TaskCommentController {
   })
   @Post('/:id')
   @HttpCode(HttpStatus.CREATED)
-  async create(@Param('id') id: number, @Body() dto: CreateCommentDto) {
-    const newComment = await this.taskCommentService.create(id, dto);
+  async create(@Param('id') id: number, @Body() dto: CreateCommentDto, @Req() req: Request) {
+    const token = await this.authService.getPayload(req.headers['authorization']);
+    const newComment = await this.taskCommentService.create(id, dto, token.sub);
     return fillObject(CommentRdo, newComment);
   }
 
@@ -68,8 +71,9 @@ export class TaskCommentController {
     description: 'Comment edited'
   })
   @Patch('/:id')
-  async update(@Param('id') id: number, @Body() dto: UpdateCommentDto) {
-    const updatedComment = await this.taskCommentService.update(id, { ...dto, userId: '18' });
+  async update(@Param('id') id: number, @Body() dto: UpdateCommentDto, @Req() req: Request) {
+    const token = await this.authService.getPayload(req.headers['authorization']);
+    const updatedComment = await this.taskCommentService.update(id, dto, token.sub);
     return fillObject(CommentRdo, updatedComment);
   }
 }

@@ -8,11 +8,4 @@ export class UpdateCommentDto {
   })
   @IsString()
   public message: string;
-
-  @ApiProperty({
-    description: 'User id',
-    example: '18',
-  })
-  @IsString()
-  public userId: string;
 }

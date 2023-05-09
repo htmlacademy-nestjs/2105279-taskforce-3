@@ -5,8 +5,7 @@ Content-Type: application/json
 {
   "email": "user2@notfound.local",
   "dateBirth": "2012-02-22",
-  "firstname": "Keks",
-  "lastname": "Smith",
+  "name": "Keks",
   "password": "123456",
   "city": "Москва",
   "role": "сustomer"
@@ -26,16 +25,17 @@ Content-Type: application/json
 
 {
   "email": "user@notfound.local",
-  "password": "123456"
+  "password": "654321"
 }
 
 ###
 # Changed user password
 PATCH  http://localhost:3333/api/auth/change HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDUyNDMzOTZkMjA5MDhhYWNlM2FhMWQiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoi0YF1c3RvbWVyIiwiaWF0IjoxNjgzNjEwOTgxLCJleHAiOjE2ODM2MTY5ODF9.8cXWiNyUPK_-S1fhCkHyrt_KYvS_wCrx2vD0hUkTh_A
 
 {
-  "email": "user@notfound.local",
+  "email": "user2@notfound.local",
   "password": "123456",
   "newPassword": "654321"
 }

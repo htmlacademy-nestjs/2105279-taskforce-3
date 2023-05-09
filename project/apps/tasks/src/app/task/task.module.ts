@@ -5,10 +5,17 @@ import { TaskService } from './task.service';
 import { TaskTagModule } from '../task-tag/task-tag.module';
 import { TaskCategoryModule } from '../task-category/task-category.module';
 import { NotifyModule } from '../notify/notify.module';
+import { AuthenticationModule } from '../authentication/authentication.module';
 
 @Module({
-  imports: [TaskCategoryModule, TaskTagModule, NotifyModule],
+  imports: [
+    AuthenticationModule,
+    TaskCategoryModule,
+    TaskTagModule,
+    NotifyModule,
+  ],
   controllers: [TaskController],
-  providers: [TaskRepository, TaskService]
+  providers: [TaskRepository, TaskService],
+  exports: [TaskService]
 })
 export class TaskModule { }
