@@ -1,4 +1,4 @@
-import { IsInt, IsNumber, IsString, Max, Min } from 'class-validator';
+import { IsInt, IsString, Max, Min } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateReviewDto {
@@ -17,11 +17,4 @@ export class UpdateReviewDto {
   @Min(0)
   @Max(5)
   public evaluation: number;
-
-  @ApiProperty({
-    description: 'Task id',
-    example: '18',
-  })
-  @IsNumber()
-  public taskId: number;
 }

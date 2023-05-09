@@ -15,6 +15,7 @@ import { AuthenticationModule } from '../authentication/authentication.module';
     NotifyModule,
   ],
   controllers: [TaskController],
-  providers: [TaskRepository, TaskService]
+  providers: [TaskRepository, TaskService],
+  exports: [TaskService]
 })
 export class TaskModule { }
