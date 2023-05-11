@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { TaskRepository } from './task.repository';
-import { TaskCategoryRepository } from '../task-category/task-category.repository';
 import { TaskTagRepository } from '../task-tag/task-tag.repository';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { Task, TaskStatus } from '@project/shared/app-types';
@@ -14,7 +13,6 @@ import { Update } from '@prisma/client';
 export class TaskService {
   constructor(
     private readonly taskRepository: TaskRepository,
-    private readonly taskCategoryRepository: TaskCategoryRepository,
     private readonly taskTagRepository: TaskTagRepository
   ) { }
 
