@@ -6,7 +6,6 @@ import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from 
 import { TaskUserEntity } from '../task-user/task-user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
-import { ConfigService } from '@nestjs/config';
 import { TaskUserRepository } from '../task-user/task-user.repository';
 import { JwtService } from '@nestjs/jwt';
 
@@ -14,7 +13,6 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthenticationService {
   constructor(
     private readonly taskUserRepository: TaskUserRepository,
-    private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
 
   ) { }
